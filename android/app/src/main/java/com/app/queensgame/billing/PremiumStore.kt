@@ -76,7 +76,7 @@ class PremiumStore(
     /** Whether the given mode can be played right now. */
     fun canPlay(mode: GameMode): Boolean = isPremium || !mode.requiresPremium
 
-    private fun setPremium(value: Boolean) {
+    private fun updatePremium(value: Boolean) {
         if (isPremium == value) return
         isPremium = value
         prefs.edit().putBoolean(CACHE_KEY, value).apply()
@@ -198,14 +198,14 @@ class PremiumStore(
             PREMIUM_PRODUCT_ID in it.products && it.purchaseState == Purchase.PurchaseState.PURCHASED
         }
         owned.forEach { acknowledge(it) }
-        setPremium(owned.isNotEmpty())
+        updatePremium(owned.isNotEmpty())
     }
 
     private suspend fun handle(purchase: Purchase) {
         if (PREMIUM_PRODUCT_ID !in purchase.products) return
         when (purchase.purchaseState) {
             Purchase.PurchaseState.PURCHASED -> {
-                setPremium(true)
+                updatePremium(true)
                 acknowledge(purchase)
                 purchaseState = PurchaseState.Idle
             }
