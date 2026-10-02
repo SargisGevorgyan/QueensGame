@@ -1,0 +1,36 @@
+{
+  "identifier" : "6F1C2A8E",
+  "nonRenewingSubscriptions" : [
+
+  ],
+  "products" : [
+    {
+      "displayPrice" : "2.99",
+      "familyShareable" : true,
+      "internalID" : "6F1C2A8F",
+      "localizations" : [
+        {
+          "description" : "Unlock Royal Decrees mode, all decrees and speed decrees.",
+          "displayName" : "Royal Pass",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.app.queensgame.premium",
+      "referenceName" : "Royal Pass",
+      "type" : "NonConsumable"
+    }
+  ],
+  "settings" : {
+    "_failTransactionsEnabled" : false,
+    "_storeKitErrors" : [
+
+    ]
+  },
+  "subscriptionGroups" : [
+
+  ],
+  "version" : {
+    "major" : 4,
+    "minor" : 0
+  }
+}
