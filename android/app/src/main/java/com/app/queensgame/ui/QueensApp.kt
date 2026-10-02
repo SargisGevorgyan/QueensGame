@@ -98,6 +98,7 @@ fun QueensApp(vm: GameViewModel) {
 
             BoxWithConstraints(Modifier.fillMaxSize().safeDrawingPadding()) {
                 val boardSide = min(min(maxWidth - 32.dp - 20.dp, maxHeight * 0.46f), 460.dp)
+                val screenHeight = maxHeight
 
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -111,7 +112,7 @@ fun QueensApp(vm: GameViewModel) {
                         modifier = Modifier
                             .widthIn(max = 520.dp)
                             .fillMaxWidth()
-                            .heightIn(min = maxHeight)
+                            .heightIn(min = screenHeight)
                             .padding(16.dp)
                             .animateContentSize(),
                     ) {

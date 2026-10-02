@@ -66,7 +66,7 @@ val LightQColors = QColors(
     gold = hex(0xD99A17), danger = hex(0xDF4750), ok = hex(0x2E9E5B),
     fog = hex(0xDCDEE9), guardBg = hex(0xD5D7E4),
     regions = listOf(0xF3C6C8, 0xF6E2A9, 0xC7E7C1, 0xB9D7F1, 0xDCCEF2, 0xF6D3B4, 0xB5E4DD, 0xDCDEEE, 0xE6ECAB)
-        .map(::hex),
+        .map { hex(it.toLong()) },
     isDark = false,
 )
 
@@ -77,7 +77,7 @@ val DarkQColors = QColors(
     gold = hex(0xEFB437), danger = hex(0xF0575F), ok = hex(0x41B671),
     fog = hex(0x2A2C40), guardBg = hex(0x31344A),
     regions = listOf(0x7F4A4D, 0x7F6A35, 0x4D6E49, 0x3F5C7D, 0x5C4F81, 0x875F3D, 0x3D6E69, 0x474B62, 0x6A723D)
-        .map(::hex),
+        .map { hex(it.toLong()) },
     isDark = true,
 )
 
