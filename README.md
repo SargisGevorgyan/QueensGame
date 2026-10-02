@@ -7,6 +7,8 @@ that bends the board's rules each round.
 It's the native counterpart to the web build in [`queens/`](queens/) —
 same puzzle engine, same palette, same feature set.
 
+**▶ Play the web version:** https://sargisgevorgyan.github.io/QueensGame/
+
 ---
 
 ## Run it
