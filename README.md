@@ -4,8 +4,10 @@ A clone of the "Queens" logic puzzle (LinkedIn-style) built with **pure SwiftUI 
 MVVM** and **zero external dependencies**, plus a unique **Royal Decrees** mode
 that bends the board's rules each round.
 
-It's the native counterpart to the web build in [`../../queens/`](../../queens/) —
+It's the native counterpart to the web build in [`queens/`](queens/) —
 same puzzle engine, same palette, same feature set.
+
+**▶ Play the web version:** https://sargisgevorgyan.github.io/QueensGame/
 
 ---
 
