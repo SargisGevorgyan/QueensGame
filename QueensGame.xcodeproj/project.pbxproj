@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A1B2C3D4E5F60718293A4B03 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B04 /* PaywallView.swift */; };
+		A1B2C3D4E5F60718293A4B01 /* PremiumStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B02 /* PremiumStore.swift */; };
 		033025C8176EF0831EE160A5 /* AnimatedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6D1C49134BC4425B96AA2F /* AnimatedBackground.swift */; };
 		059DC2FFD86F6AC128A16365 /* StatsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A269C95DCEAE0633E197C0 /* StatsStore.swift */; };
 		0C9B4B76C4A0D84F4B29428E /* GameModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B336469B113F11F2E43D4E /* GameModels.swift */; };
@@ -48,6 +50,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A1B2C3D4E5F60718293A4B05 /* QueensGame.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = QueensGame.storekit; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B04 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4B02 /* PremiumStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumStore.swift; sourceTree = "<group>"; };
 		0D6D1C49134BC4425B96AA2F /* AnimatedBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedBackground.swift; sourceTree = "<group>"; };
 		1002041D02A4C125F8662A79 /* QueensGameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensGameTests.swift; sourceTree = "<group>"; };
 		1A007F1250313FB909DAB5FD /* QueensGameTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QueensGameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,6 +107,7 @@
 				D984F8E0633412E8020F82ED /* DecreeBanner.swift */,
 				FD5E067240051F5B9A3196C6 /* GameOverView.swift */,
 				D75C1761540F21AC50B65230 /* HowToPlayView.swift */,
+				A1B2C3D4E5F60718293A4B04 /* PaywallView.swift */,
 				5ABB8468E8611D87879ABB6F /* RealmChips.swift */,
 				54CFB196B8EC8F1E4F679E08 /* RootView.swift */,
 			);
@@ -135,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				37BC7D381CAB1EA664A12071 /* QueensGame */,
+				A1B2C3D4E5F60718293A4B05 /* QueensGame.storekit */,
 				F8BDE4E89037E04F53BE2742 /* QueensGameTests */,
 				169BF904E0039465883AB082 /* QueensGameUITests */,
 				BE6DA6C1C79F65D0B7E5232F /* Products */,
@@ -175,6 +182,7 @@
 			isa = PBXGroup;
 			children = (
 				A0DDEC70ECB2FDF7BB48B9B0 /* Haptics.swift */,
+				A1B2C3D4E5F60718293A4B02 /* PremiumStore.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -320,6 +328,8 @@
 				B562D518A61B3FFE608ED94B /* RealmChips.swift in Sources */,
 				C441843BDE5C337D4690200C /* RootView.swift in Sources */,
 				F38641E966C68FAC6FC4308D /* ShakeEffect.swift in Sources */,
+				A1B2C3D4E5F60718293A4B01 /* PremiumStore.swift in Sources */,
+				A1B2C3D4E5F60718293A4B03 /* PaywallView.swift in Sources */,
 				059DC2FFD86F6AC128A16365 /* StatsStore.swift in Sources */,
 				500E6871CD863ADE211A545B /* Theme.swift in Sources */,
 			);

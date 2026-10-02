@@ -33,7 +33,7 @@ xcodebuild -project QueensGame.xcodeproj -scheme QueensGame \
   -destination 'platform=iOS Simulator,name=iPhone 17 Pro' test
 ```
 
-18 tests (16 unit + 2 UI) cover the generator (uniqueness, contiguity, rule
+21 tests (18 unit + 3 UI) cover the generator (uniqueness, contiguity, rule
 compliance, deterministic Daily seeding), the validator (row/column/realm
 duplicates, touching Queens, Assassin's Range), the Smart Auto-X ownership
 system (fill, smart removal, manual-mark preservation, shared ownership,
@@ -97,6 +97,34 @@ mid-round.
 
 ---
 
+## Monetization: Royal Pass
+
+A single **non-consumable** in-app purchase, `com.app.queensgame.premium`
+("Royal Pass"), built on **StoreKit 2** with no third-party SDKs, ads or
+tracking.
+
+| Free | Royal Pass |
+| --- | --- |
+| Standard mode, Daily + Random puzzles, all board sizes, Auto-X | Royal Decrees mode, all four decrees, Speed decrees |
+
+- Tapping the locked **Royal Decrees 🔒** segment, or **Unlock Royal Pass** in the
+  ⋯ menu, opens the paywall (localized price, purchase, **Restore Purchases**).
+- `PremiumStore` listens to `Transaction.updates` (Ask to Buy, refunds, other
+  devices) and re-checks `Transaction.currentEntitlements` on launch. The last
+  known state is cached in UserDefaults so the unlock works offline.
+- Local testing: the **QueensGame** scheme's Run action uses
+  `QueensGame.storekit`, so purchases work in the Simulator with no App Store
+  Connect setup (Debug ▸ StoreKit ▸ Manage Transactions to refund/reset).
+- UI tests pass `-UITestPremium` (honoured in DEBUG builds only) to start
+  unlocked.
+
+Before shipping: create the same product ID in App Store Connect
+(Non-Consumable), sign the Paid Applications agreement, and change the ID in
+`PremiumStore.premiumProductID` + `QueensGame.storekit` if you change the bundle
+id.
+
+---
+
 ## Architecture
 
 ```
@@ -113,9 +141,9 @@ QueensGame/
 │                            decree rotation  (@MainActor ObservableObject)
 ├── Views/          RootView, BoardArea + CellView, DecreeBanner, RealmChips,
 │                   ControlDock, GameOverView, HowToPlayView, AnimatedBackground,
-│                   ConfettiOverlay
+│                   ConfettiOverlay, PaywallView
 ├── Support/        Theme (adaptive colour tokens), ShakeEffect
-└── Services/       Haptics
+└── Services/       Haptics, PremiumStore (StoreKit 2 Royal Pass unlock)
 ```
 
 The generator is the interesting part: a random region grow rarely yields a

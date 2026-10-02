@@ -11,11 +11,13 @@ import SwiftUI
 @main
 struct QueensGameApp: App {
     @StateObject private var game = QueensGameViewModel()
+    @StateObject private var store = PremiumStore()
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environmentObject(game)
+                .environmentObject(store)
                 .tint(QColor.accent)
         }
     }
