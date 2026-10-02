@@ -1,0 +1,1395 @@
+<title>Queens &amp; Decrees</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Hanken+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ============ TOKENS ============ */
+  :root{
+    --bg:#eef0f7;
+    --surface:#ffffff;
+    --surface-2:#f4f5fb;
+    --ink:#1b1d2a;
+    --muted:#6a6f82;
+    --faint:#9aa0b3;
+    --line:#e2e4ef;
+    --line-strong:#23263a;
+    --hair:color-mix(in srgb, var(--line-strong) 16%, transparent);
+    --accent:#5b4bd6;
+    --accent-ink:#ffffff;
+    --accent-soft:color-mix(in srgb, var(--accent) 12%, var(--surface));
+    --gold:#d99a17;
+    --danger:#df4750;
+    --ok:#2e9e5b;
+    --shadow-sm:0 1px 2px rgba(20,22,45,.06);
+    --shadow:0 1px 2px rgba(20,22,45,.06), 0 14px 34px -18px rgba(20,22,45,.22);
+    --shadow-lg:0 30px 80px -24px rgba(20,22,45,.4);
+    --radius:16px;
+
+    --z1:#f3c6c8; --z2:#f6e2a9; --z3:#c7e7c1; --z4:#b9d7f1;
+    --z5:#dccef2; --z6:#f6d3b4; --z7:#b5e4dd; --z8:#dcdeee; --z9:#e6ecab;
+    --fog:#dcdee9;
+    --guard-bg:#d5d7e4;
+
+    --font-display:"Young Serif","Iowan Old Style",Georgia,serif;
+    --font-body:"Hanken Grotesk",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#121320;
+      --surface:#1d1f2e;
+      --surface-2:#252739;
+      --ink:#ecedf6;
+      --muted:#9ba1b7;
+      --faint:#727790;
+      --line:#2c2e42;
+      --line-strong:#c9cce6;
+      --hair:color-mix(in srgb, var(--line-strong) 14%, transparent);
+      --accent:#9184ff;
+      --accent-ink:#14131f;
+      --accent-soft:color-mix(in srgb, var(--accent) 16%, var(--surface));
+      --gold:#efb437;
+      --danger:#f0575f;
+      --ok:#41b671;
+      --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 16px 40px -20px rgba(0,0,0,.65);
+      --shadow-lg:0 34px 90px -26px rgba(0,0,0,.75);
+      --z1:#7f4a4d; --z2:#7f6a35; --z3:#4d6e49; --z4:#3f5c7d;
+      --z5:#5c4f81; --z6:#875f3d; --z7:#3d6e69; --z8:#474b62; --z9:#6a723d;
+      --fog:#2a2c40;
+      --guard-bg:#31344a;
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#121320;
+    --surface:#1d1f2e;
+    --surface-2:#252739;
+    --ink:#ecedf6;
+    --muted:#9ba1b7;
+    --faint:#727790;
+    --line:#2c2e42;
+    --line-strong:#c9cce6;
+    --hair:color-mix(in srgb, var(--line-strong) 14%, transparent);
+    --accent:#9184ff;
+    --accent-ink:#14131f;
+    --accent-soft:color-mix(in srgb, var(--accent) 16%, var(--surface));
+    --gold:#efb437;
+    --danger:#f0575f;
+    --ok:#41b671;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 16px 40px -20px rgba(0,0,0,.65);
+    --shadow-lg:0 34px 90px -26px rgba(0,0,0,.75);
+    --z1:#7f4a4d; --z2:#7f6a35; --z3:#4d6e49; --z4:#3f5c7d;
+    --z5:#5c4f81; --z6:#875f3d; --z7:#3d6e69; --z8:#474b62; --z9:#6a723d;
+    --fog:#2a2c40;
+    --guard-bg:#31344a;
+  }
+
+  /* ============ BASE ============ */
+  *{box-sizing:border-box}
+  [hidden]{display:none!important}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:15px;
+    line-height:1.5;
+    -webkit-text-size-adjust:100%;
+  }
+  .app{
+    max-width:1060px;
+    margin:0 auto;
+    padding:clamp(12px,3vw,28px) clamp(12px,3vw,24px) 48px;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:var(--font-display);font-weight:400;text-wrap:balance;margin:0}
+  button{font-family:inherit}
+  ::selection{background:color-mix(in srgb,var(--accent) 28%,transparent)}
+  :focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:6px}
+
+  /* ============ HEADER ============ */
+  .top{
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    padding-bottom:18px;
+  }
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand .crest{
+    width:34px;height:34px;flex:none;display:grid;place-items:center;
+    background:var(--ink);border-radius:10px;
+  }
+  .brand .crest svg{width:20px;height:20px;fill:var(--gold)}
+  .brand b{font-family:var(--font-display);font-size:1.28rem;letter-spacing:.2px;font-weight:400}
+  .brand span{display:block;font-size:.72rem;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;margin-top:-2px}
+  .top .spacer{flex:1}
+
+  .seg{
+    display:inline-flex;background:var(--surface-2);border:1px solid var(--line);
+    border-radius:12px;padding:3px;gap:2px;
+  }
+  .seg button{
+    border:0;background:transparent;color:var(--muted);cursor:pointer;
+    padding:7px 13px;border-radius:9px;font-weight:600;font-size:.86rem;
+    display:inline-flex;align-items:center;gap:6px;transition:background .15s,color .15s;
+  }
+  .seg button .icon{width:16px;height:16px}
+  .seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-sm)}
+  .seg.compact button{padding:6px 10px;font-family:var(--font-mono);font-size:.82rem}
+
+  .iconbtn{
+    width:38px;height:38px;flex:none;display:grid;place-items:center;
+    background:var(--surface);border:1px solid var(--line);border-radius:11px;
+    color:var(--ink);cursor:pointer;transition:background .15s,border-color .15s;
+  }
+  .iconbtn:hover{background:var(--surface-2)}
+  .iconbtn .icon{width:19px;height:19px}
+
+  /* ============ LAYOUT ============ */
+  .stage{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) 264px;
+    gap:clamp(18px,3vw,34px);
+    align-items:start;
+  }
+  @media (max-width:840px){
+    .stage{grid-template-columns:1fr}
+  }
+
+  .play{display:flex;flex-direction:column;align-items:center;gap:16px}
+
+  /* ============ BOARD ============ */
+  .board-wrap{
+    --n:8;
+    display:grid;
+    grid-template-columns:1.35rem minmax(0,1fr);
+    grid-template-rows:1.35rem minmax(0,1fr);
+    gap:.35rem;
+    width:min(93vw,33.5rem);
+    max-width:100%;
+  }
+  .rank-file{
+    display:grid;font-family:var(--font-mono);font-size:.78rem;color:var(--faint);
+    user-select:none;
+  }
+  #colNums{grid-column:2;grid-row:1;grid-template-columns:repeat(var(--n),1fr);align-items:end;justify-items:center;padding-bottom:2px}
+  #rowNums{grid-column:1;grid-row:2;grid-template-rows:repeat(var(--n),1fr);align-items:center;justify-items:end;padding-right:3px}
+  .rank-file span{transition:color .2s,opacity .2s}
+  .rank-file span.done{color:var(--faint);opacity:.4;text-decoration:line-through}
+
+  .board{
+    grid-column:2;grid-row:2;
+    display:grid;grid-template-columns:repeat(var(--n),1fr);
+    gap:1px;background:var(--hair);
+    border-radius:13px;overflow:hidden;
+    box-shadow:0 0 0 2px var(--line-strong), var(--shadow);
+    touch-action:none;
+  }
+  .board.locked{pointer-events:none}
+  .board.solved{animation:boardglow .9s ease-out}
+
+  .cell{
+    appearance:none;border:0;margin:0;padding:0;
+    aspect-ratio:1/1;position:relative;
+    display:grid;place-items:center;
+    background:var(--cell-bg,var(--surface));
+    color:var(--ink);
+    cursor:pointer;touch-action:none;
+    transition:background .18s ease;
+  }
+  .cell:focus-visible{outline:3px solid var(--accent);outline-offset:-3px;z-index:3;border-radius:2px}
+  .cell .art{position:absolute;inset:0;display:grid;place-items:center}
+  .cell .mk{grid-area:1/1;width:62%;height:62%;transform:scale(0);opacity:0;
+    transition:transform .19s cubic-bezier(.22,1.5,.4,1),opacity .14s}
+  .cell[data-show="x"] .mk-x{transform:scale(1);opacity:1}
+  .cell[data-show="queen"] .mk-q{transform:scale(1);opacity:1}
+  .cell[data-derived="1"] .mk-x{opacity:.42}
+  .mk-x path{stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;fill:none;opacity:.62}
+  .mk-q{filter:drop-shadow(0 2px 3px rgba(0,0,0,.22))}
+  .mk-q path{fill:var(--gold);stroke:color-mix(in srgb,var(--gold) 55%,#000);stroke-width:.4}
+
+  .cell[data-guard="1"]{background:var(--guard-bg);cursor:not-allowed}
+  .cell[data-guard="1"] .mk-g{transform:scale(1);opacity:.85}
+  .mk-g path{fill:var(--muted)}
+
+  .cell.hint-bad{background:color-mix(in srgb,var(--danger) 24%,var(--cell-bg))}
+  .cell.hint-bad .mk-q path{fill:var(--danger);stroke:color-mix(in srgb,var(--danger) 45%,#000)}
+  .cell.hint-bad::after{content:"";position:absolute;inset:0;box-shadow:inset 0 0 0 2.5px var(--danger);pointer-events:none}
+
+  .cell.pop .art::before{
+    content:"";position:absolute;inset:16%;border-radius:50%;
+    animation:ring .55s ease-out forwards;
+  }
+  .cell.shake{animation:shake .32s ease}
+
+  @media (hover:hover){
+    .board:not(.locked) .cell:hover{background:color-mix(in srgb,var(--accent) 9%,var(--cell-bg))}
+  }
+
+  /* ============ TOOLBAR ============ */
+  .toolbar{
+    width:min(93vw,33.5rem);max-width:100%;
+    display:flex;align-items:center;gap:8px;flex-wrap:wrap;
+  }
+  .stats{display:flex;gap:18px;margin-right:auto}
+  .stat{display:flex;flex-direction:column;line-height:1.1}
+  .stat i{font-style:normal;font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+  .stat b{font-family:var(--font-mono);font-weight:600;font-size:1.12rem;font-variant-numeric:tabular-nums}
+  .stat.warn b{color:var(--danger)}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:7px;
+    background:var(--surface);border:1px solid var(--line);color:var(--ink);
+    padding:8px 12px;border-radius:11px;font-weight:600;font-size:.85rem;cursor:pointer;
+    transition:background .15s,border-color .15s,transform .05s;
+  }
+  .btn .icon{width:17px;height:17px}
+  .btn:hover:not(:disabled){background:var(--surface-2)}
+  .btn:active:not(:disabled){transform:translateY(1px)}
+  .btn:disabled{opacity:.38;cursor:default}
+  .btn[aria-pressed="true"]{background:var(--accent-soft);border-color:color-mix(in srgb,var(--accent) 45%,var(--line))}
+  .btn.icon-only{padding:8px}
+
+  /* ============ PANEL ============ */
+  .panel{
+    background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+    box-shadow:var(--shadow);padding:16px;display:flex;flex-direction:column;gap:18px;
+  }
+  @media (max-width:840px){ .panel{order:3;width:min(93vw,33.5rem);max-width:100%} }
+  .group{display:flex;flex-direction:column;gap:9px}
+  .group > h3{font-size:.72rem;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);font-family:var(--font-body);font-weight:700}
+  .row-btns{display:flex;gap:8px}
+  .row-btns .btn{flex:1;justify-content:center}
+  .seg.grid4{display:grid;grid-template-columns:repeat(4,1fr)}
+  .seg.grid4 button{justify-content:center;padding:8px 0}
+
+  .switch{display:flex;align-items:center;gap:10px;cursor:pointer;font-size:.85rem;font-weight:600}
+  .switch input{position:absolute;opacity:0;pointer-events:none}
+  .switch .track{width:38px;height:22px;border-radius:999px;background:var(--line);position:relative;transition:background .16s;flex:none}
+  .switch .track::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:var(--shadow-sm);transition:transform .16s}
+  .switch input:checked + .track{background:var(--accent)}
+  .switch input:checked + .track::after{transform:translateX(16px)}
+  .switch input:disabled + .track{opacity:.4}
+  .switch input:focus-visible + .track{outline:3px solid var(--accent);outline-offset:2px}
+
+  .decree-card{
+    background:var(--accent-soft);
+    border:1px solid color-mix(in srgb,var(--accent) 32%,transparent);
+    border-radius:13px;padding:13px;display:flex;flex-direction:column;gap:7px;
+  }
+  .decree-card .eyebrow{font-size:.64rem;letter-spacing:.16em;text-transform:uppercase;color:color-mix(in srgb,var(--accent) 70%,var(--ink));font-weight:700;display:flex;align-items:center;gap:6px}
+  .decree-card .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blip 1.6s ease-in-out infinite}
+  .decree-card h4{font-family:var(--font-display);font-weight:400;font-size:1.08rem;margin:0}
+  .decree-card p{margin:0;font-size:.82rem;color:var(--muted)}
+  .decree-card.plain{background:var(--surface-2);border-color:var(--line)}
+  .decree-card.plain .eyebrow{color:var(--muted)}
+  .decree-card.plain .dot{background:var(--faint);animation:none}
+
+  .checklist{display:grid;grid-template-columns:1fr 1fr;gap:7px 14px}
+  .chip{display:flex;align-items:center;gap:7px;font-size:.8rem;font-family:var(--font-mono)}
+  .chip .sw{width:14px;height:14px;border-radius:4px;background:var(--c,var(--line));box-shadow:inset 0 0 0 1px rgba(0,0,0,.18);flex:none;display:grid;place-items:center;font-size:.6rem;color:var(--muted)}
+  .chip .tick{margin-left:auto;color:var(--ok);opacity:0;transition:opacity .2s;font-weight:700}
+  .chip.done{color:var(--faint)}
+  .chip.done .lbl{text-decoration:line-through}
+  .chip.done .tick{opacity:1}
+
+  /* ============ STATUS LINE ============ */
+  .statusline{
+    width:min(93vw,33.5rem);max-width:100%;text-align:center;
+    font-size:.85rem;color:var(--muted);min-height:1.2em;
+  }
+  .statusline b{color:var(--danger)}
+
+  /* ============ TOAST ============ */
+  .toast{
+    position:fixed;left:50%;top:18px;transform:translate(-50%,-140%);
+    background:var(--ink);color:var(--bg);
+    padding:12px 16px;border-radius:13px;box-shadow:var(--shadow-lg);
+    display:flex;align-items:center;gap:12px;max-width:min(92vw,380px);z-index:70;
+    transition:transform .4s cubic-bezier(.2,1.2,.3,1);
+  }
+  .toast.show{transform:translate(-50%,0)}
+  .toast .ti{width:34px;height:34px;flex:none;display:grid;place-items:center;border-radius:9px;background:color-mix(in srgb,var(--accent) 40%,var(--ink))}
+  .toast .ti svg{width:19px;height:19px;stroke:var(--bg);fill:none;stroke-width:1.8}
+  .toast h4{font-family:var(--font-display);font-weight:400;font-size:.98rem;margin:0;color:var(--bg)}
+  .toast p{margin:1px 0 0;font-size:.78rem;opacity:.8}
+
+  /* ============ MODAL ============ */
+  .scrim{
+    position:fixed;inset:0;background:color-mix(in srgb,#0a0b16 62%,transparent);
+    backdrop-filter:blur(3px);display:grid;place-items:center;padding:16px;z-index:80;
+  }
+  .scrim[hidden]{display:none}
+  .modal{
+    background:var(--surface);border:1px solid var(--line);border-radius:20px;
+    box-shadow:var(--shadow-lg);width:100%;max-width:37rem;max-height:88vh;overflow:auto;
+    padding:26px;position:relative;
+  }
+  .modal h2{font-size:1.5rem;margin-bottom:4px}
+  .modal .close{position:absolute;top:14px;right:14px}
+  .modal .lede{color:var(--muted);margin:0 0 18px}
+  .rule{display:flex;gap:14px;padding:13px 0;border-top:1px solid var(--line)}
+  .rule:first-of-type{border-top:0}
+  .rule .n{font-family:var(--font-display);font-size:1.1rem;color:var(--accent);flex:none;width:1.4rem;text-align:center}
+  .rule h3{font-size:1rem;margin-bottom:2px}
+  .rule p{margin:0;font-size:.88rem;color:var(--muted)}
+  .mini{display:grid;grid-template-columns:repeat(4,18px);grid-auto-rows:18px;gap:2px;flex:none;margin-top:2px}
+  .mini i{background:var(--surface-2);border-radius:3px;display:grid;place-items:center}
+  .mini i svg{width:12px;height:12px;fill:var(--gold)}
+  .mini i.a{background:var(--z4)} .mini i.b{background:var(--z1)} .mini i.c{background:var(--z3)} .mini i.d{background:var(--z2)}
+  .mini i.bad{box-shadow:inset 0 0 0 2px var(--danger)}
+  .decree-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:6px}
+  @media (max-width:520px){.decree-grid{grid-template-columns:1fr}}
+  .dg{background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:12px}
+  .dg h4{font-family:var(--font-display);font-weight:400;font-size:.98rem;margin:0 0 3px}
+  .dg p{margin:0;font-size:.8rem;color:var(--muted)}
+
+  /* ============ WIN ============ */
+  .win-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:22px;
+    box-shadow:var(--shadow-lg);width:100%;max-width:26rem;padding:30px 26px;text-align:center;
+    position:relative;
+  }
+  .win-card .medal{
+    width:64px;height:64px;margin:0 auto 12px;border-radius:50%;
+    background:radial-gradient(circle at 32% 30%,color-mix(in srgb,var(--gold) 65%,#fff),var(--gold));
+    display:grid;place-items:center;box-shadow:0 10px 24px -8px color-mix(in srgb,var(--gold) 60%,transparent);
+  }
+  .win-card .medal svg{width:34px;height:34px;fill:#3a2a06}
+  .win-card h2{font-size:1.9rem}
+  .win-card .sub{color:var(--muted);margin:2px 0 18px;font-size:.9rem}
+  .win-stats{display:flex;gap:10px;margin-bottom:20px}
+  .win-stats div{flex:1;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:10px 6px}
+  .win-stats i{font-style:normal;display:block;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+  .win-stats b{font-family:var(--font-mono);font-size:1.15rem;font-variant-numeric:tabular-nums}
+  .win-card .row-btns{margin-top:2px}
+  .btn.primary{background:var(--accent);border-color:transparent;color:var(--accent-ink)}
+  .btn.primary:hover:not(:disabled){background:color-mix(in srgb,var(--accent) 88%,#000)}
+
+  #fx{position:fixed;inset:0;pointer-events:none;z-index:90}
+
+  /* ============ ANIMATIONS ============ */
+  @keyframes ring{from{box-shadow:0 0 0 0 color-mix(in srgb,var(--gold) 65%,transparent)}to{box-shadow:0 0 0 16px transparent}}
+  @keyframes shake{10%,90%{transform:translateX(-2px)}30%,70%{transform:translateX(3px)}50%{transform:translateX(-3px)}}
+  @keyframes blip{0%,100%{opacity:1}50%{opacity:.25}}
+  @keyframes boardglow{from{box-shadow:0 0 0 2px var(--ok),0 0 40px 6px color-mix(in srgb,var(--ok) 45%,transparent)}to{box-shadow:0 0 0 2px var(--line-strong),var(--shadow)}}
+  @media (prefers-reduced-motion:reduce){
+    *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+  }
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="i-crown"><path d="M2 6.6 6.4 9.6 10 3.4 13.6 9.6 18 6.6 16.5 16.4a1 1 0 0 1-1 .85H4.5a1 1 0 0 1-1-.85z"/></g>
+    <path id="i-x" d="M5 5 15 15 M15 5 5 15"/>
+    <path id="i-guard" d="M10 2 16.5 4.3V9.5c0 4-2.7 6.9-6.5 8.5C6.2 16.4 3.5 13.5 3.5 9.5V4.3z"/>
+  </defs>
+</svg>
+
+<div class="app">
+  <header class="top">
+    <div class="brand">
+      <span class="crest"><svg viewBox="0 0 20 20"><use href="#i-crown"/></svg></span>
+      <span>
+        <b>Queens &amp; Decrees</b>
+        <span>Crown every rank &amp; realm</span>
+      </span>
+    </div>
+    <div class="spacer"></div>
+    <div class="seg" role="group" aria-label="Game mode">
+      <button id="modeStd" aria-pressed="true">Standard</button>
+      <button id="modeDec" aria-pressed="false">Royal Decrees</button>
+    </div>
+    <button class="iconbtn" id="helpBtn" aria-label="How to play" title="How to play">
+      <svg class="icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="10" cy="10" r="8"/><path d="M7.7 7.8a2.3 2.3 0 1 1 3.4 2c-.9.5-1.1 1-1.1 2M10 15h.01"/></svg>
+    </button>
+    <button class="iconbtn" id="themeBtn" aria-label="Toggle dark mode" title="Toggle theme">
+      <svg class="icon" id="themeIcon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"></svg>
+    </button>
+  </header>
+
+  <div class="stage">
+    <div class="play">
+      <div class="board-wrap" id="boardWrap">
+        <div class="rank-file" id="colNums" aria-hidden="true"></div>
+        <div class="rank-file" id="rowNums" aria-hidden="true"></div>
+        <div class="board" id="board" role="grid" aria-label="Queens puzzle board"></div>
+      </div>
+
+      <p class="statusline" id="status" aria-live="polite"></p>
+
+      <div class="toolbar">
+        <div class="stats">
+          <div class="stat"><i>Time</i><b id="time">0:00</b></div>
+          <div class="stat"><i>Moves</i><b id="moves">0</b></div>
+          <div class="stat" id="conflictStat" hidden><i>Conflicts</i><b id="conflicts">0</b></div>
+        </div>
+        <button class="btn icon-only" id="undoBtn" aria-label="Undo" title="Undo (⌘Z)">
+          <svg class="icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 5 3.5 9.5 8 14M3.5 9.5H12a4.5 4.5 0 0 1 0 9H9"/></svg>
+        </button>
+        <button class="btn icon-only" id="redoBtn" aria-label="Redo" title="Redo (⌘⇧Z)">
+          <svg class="icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5 16.5 9.5 12 14M16.5 9.5H8a4.5 4.5 0 0 0 0 9h3"/></svg>
+        </button>
+        <button class="btn" id="clearBtn">
+          <svg class="icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h12M8 6V4h4v2M6 6l.8 10.2A1 1 0 0 0 7.8 17h4.4a1 1 0 0 0 1-.8L14 6"/></svg>
+          Clear
+        </button>
+        <button class="btn" id="autoxBtn" aria-pressed="false" title="Smart Auto-X: auto-mark × around each Queen; removing a Queen clears only its own auto-marks and keeps yours">
+          <svg class="icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l8 8M14 6l-8 8"/></svg>
+          Auto-X
+        </button>
+      </div>
+    </div>
+
+    <aside class="panel">
+      <div class="group">
+        <h3>Board size</h3>
+        <div class="seg compact grid4" role="group" aria-label="Board size">
+          <button data-size="6">6</button>
+          <button data-size="7">7</button>
+          <button data-size="8" aria-pressed="true">8</button>
+          <button data-size="9">9</button>
+        </div>
+      </div>
+
+      <div class="group">
+        <h3>New game</h3>
+        <div class="row-btns">
+          <button class="btn primary" id="newBtn" style="flex:1;justify-content:center">
+            <svg class="icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><rect x="3" y="3" width="14" height="14" rx="3.5"/><circle cx="7" cy="7" r="1.3" fill="currentColor" stroke="none"/><circle cx="13" cy="13" r="1.3" fill="currentColor" stroke="none"/><circle cx="10" cy="10" r="1.3" fill="currentColor" stroke="none"/></svg>
+            Random
+          </button>
+          <button class="btn" id="dailyBtn" style="flex:1;justify-content:center">
+            <svg class="icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><rect x="3" y="4.5" width="14" height="12.5" rx="2.5"/><path d="M3 8.5h14M7 2.5v3M13 2.5v3"/></svg>
+            <span id="dailyLbl">Daily</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="group" id="speedGroup" hidden>
+        <h3>Decree tempo</h3>
+        <label class="switch">
+          <input type="checkbox" id="speedChk">
+          <span class="track"></span>
+          <span>Speed decrees &mdash; new every 30s</span>
+        </label>
+      </div>
+
+      <div class="group" id="autoxGroup">
+        <h3>Smart Auto-X reach</h3>
+        <div class="seg" role="group" aria-label="Auto-X reach">
+          <button id="axAdj" aria-pressed="true">Adjacent</button>
+          <button id="axAgg" aria-pressed="false">Aggressive</button>
+        </div>
+      </div>
+
+      <div class="decree-card plain" id="decreeCard">
+        <span class="eyebrow"><span class="dot"></span><span id="decreeEyebrow">In force</span></span>
+        <h4 id="decreeName">Standard rules</h4>
+        <p id="decreeDesc">One Queen per rank, file and realm. No two Queens may touch.</p>
+      </div>
+
+      <div class="group">
+        <h3>Realms</h3>
+        <div class="checklist" id="checklist"></div>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <span class="ti"><svg viewBox="0 0 20 20"><use href="#i-crown" fill="currentColor"/></svg></span>
+  <div><h4 id="toastName">Decree</h4><p id="toastDesc">description</p></div>
+</div>
+
+<div class="scrim" id="helpScrim" hidden>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+    <button class="iconbtn close" id="helpClose" aria-label="Close">
+      <svg class="icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l8 8M14 6l-8 8"/></svg>
+    </button>
+    <h2 id="helpTitle">How to play</h2>
+    <p class="lede">Crown the board so every rank, file and coloured realm holds exactly one Queen.</p>
+
+    <div class="rule"><span class="n">I</span><div>
+      <h3>One Queen per rank, file &amp; realm</h3>
+      <p>Each row, each column, and each colour region gets exactly one Queen &mdash; no more, no fewer.</p>
+    </div>
+    <span class="mini"><i class="a"></i><i class="a"><svg viewBox="0 0 20 20"><use href="#i-crown"/></svg></i><i class="a"></i><i class="a"></i></span></div>
+
+    <div class="rule"><span class="n">II</span><div>
+      <h3>Queens can&rsquo;t touch</h3>
+      <p>No two Queens may sit in adjacent squares &mdash; not horizontally, vertically, or diagonally.</p>
+    </div>
+    <span class="mini"><i></i><i class="bad"><svg viewBox="0 0 20 20"><use href="#i-crown"/></svg></i><i></i><i></i><i></i><i></i><i class="bad"><svg viewBox="0 0 20 20"><use href="#i-crown"/></svg></i><i></i></span></div>
+
+    <div class="rule"><span class="n">III</span><div>
+      <h3>Controls</h3>
+      <p><b>Click / tap</b> cycles a square: empty &rarr; <b>&times;</b> &rarr; <b>Queen</b> &rarr; empty. <b>Double-click</b> or <b>long-press</b> drops a Queen at once. <b>Right-click</b> toggles an&nbsp;&times;. <b>Click&nbsp;&amp;&nbsp;drag</b> to sweep &times; marks across squares.</p>
+    </div></div>
+
+    <div class="rule"><span class="n">IV</span><div>
+      <h3>Helpers</h3>
+      <p>Rank &amp; file numbers strike through when solved. Rule-breaking Queens flash red. Undo / redo, a move counter and a timer track your run.</p>
+      <p><b>Smart Auto-X</b> auto-marks a faint &times; around every Queen you place &mdash; the 8 touching squares (<i>Adjacent</i>), or the whole rank, file &amp; realm too (<i>Aggressive</i>). Your own &times; marks are never touched, and removing a Queen clears only <i>its</i> auto-marks &mdash; ones another Queen still rules out, or that you&rsquo;ve tapped to keep, stay put.</p>
+    </div></div>
+
+    <div class="rule"><span class="n">V</span><div>
+      <h3>Royal Decrees mode</h3>
+      <p>Switch on <b>Royal Decrees</b> and each new round a herald proclaims one rule-bending decree:</p>
+      <div class="decree-grid">
+        <div class="dg"><h4>The Fog of War</h4><p>Realm colours stay hidden until you touch a square inside them.</p></div>
+        <div class="dg"><h4>The Royal Guard</h4><p>One fixed Guard holds its square &mdash; it blocks Queens like a permanent &times;.</p></div>
+        <div class="dg"><h4>Assassin&rsquo;s Range</h4><p>Queens also strike a square two steps away along any diagonal.</p></div>
+        <div class="dg"><h4>Color Lock</h4><p>Placing a Queen auto-marks &times; on the rest of its realm.</p></div>
+      </div>
+      <p style="margin-top:8px">Turn on <b>Speed decrees</b> to have the decree change every 30 seconds mid-round.</p>
+    </div></div>
+  </div>
+</div>
+
+<div class="scrim" id="winScrim" hidden>
+  <div class="win-card" role="dialog" aria-modal="true" aria-labelledby="winTitle">
+    <div class="medal"><svg viewBox="0 0 20 20"><use href="#i-crown"/></svg></div>
+    <h2 id="winTitle">Long live the realm</h2>
+    <p class="sub" id="winSub">Solved</p>
+    <div class="win-stats">
+      <div><i>Time</i><b id="winTime">0:00</b></div>
+      <div><i>Moves</i><b id="winMoves">0</b></div>
+      <div><i>Board</i><b id="winBoard">8&times;8</b></div>
+    </div>
+    <div class="row-btns">
+      <button class="btn primary" id="winNew" style="flex:1;justify-content:center">New puzzle</button>
+      <button class="btn" id="winReview" style="flex:1;justify-content:center">Review board</button>
+    </div>
+  </div>
+</div>
+
+<canvas id="fx"></canvas>
+
+<script>
+(function(){
+"use strict";
+var $ = function(s){ return document.querySelector(s); };
+var reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- RNG ---------- */
+function mulberry32(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+function hashStr(s){ var h=2166136261>>>0; for(var i=0;i<s.length;i++){ h^=s.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; }
+function roman(n){ var m=[["X",10],["IX",9],["V",5],["IV",4],["I",1]], o=""; for(var i=0;i<m.length;i++){ while(n>=m[i][1]){ o+=m[i][0]; n-=m[i][1]; } } return o; }
+
+/* ---------- Puzzle generation ---------- */
+function buildSolution(N, rs, rint, shuffle){
+  var col = new Array(N).fill(-1), used = new Array(N).fill(false);
+  function ok(r,c){
+    if(r>0){ if(Math.abs(col[r-1]-c)<=1) return false; }
+    if(rs.diag2 && r>1){ if(Math.abs(col[r-2]-c)===2) return false; }
+    return true;
+  }
+  function rec(r){
+    if(r===N) return true;
+    var order = shuffle(Array.from({length:N},function(_,i){return i;}));
+    for(var i=0;i<N;i++){
+      var c=order[i];
+      if(used[c] || !ok(r,c)) continue;
+      col[r]=c; used[c]=true;
+      if(rec(r+1)) return true;
+      used[c]=false; col[r]=-1;
+    }
+    return false;
+  }
+  return rec(0) ? col.slice() : null;
+}
+
+function growRegions(N, sol, rint){
+  var reg=[], k, r, c;
+  for(r=0;r<N;r++){ reg.push(new Array(N).fill(-1)); }
+  var size=new Array(N).fill(1);
+  var cand=[]; for(k=0;k<N;k++) cand.push([]);
+  var dirs=[[1,0],[-1,0],[0,1],[0,-1]];
+  function inb(a,b){ return a>=0&&b>=0&&a<N&&b<N; }
+  function addC(kk,rr,cc){
+    for(var d=0;d<4;d++){ var nr=rr+dirs[d][0], nc=cc+dirs[d][1]; if(inb(nr,nc)&&reg[nr][nc]===-1) cand[kk].push([nr,nc]); }
+  }
+  for(r=0;r<N;r++){ reg[r][sol[r]]=r; addC(r,r,sol[r]); }
+  var remaining=N*N-N, guard=0;
+  while(remaining>0 && guard++<N*N*20){
+    var pool=[];
+    for(k=0;k<N;k++) if(cand[k].length) pool.push(k);
+    if(!pool.length) break;
+    pool.sort(function(a,b){ return size[a]-size[b]; });
+    pool = pool.slice(0, Math.max(1, Math.ceil(pool.length*0.6)));
+    k = pool[rint(pool.length)];
+    var picked=null;
+    while(cand[k].length){
+      var i=rint(cand[k].length), cell=cand[k][i];
+      cand[k][i]=cand[k][cand[k].length-1]; cand[k].pop();
+      if(reg[cell[0]][cell[1]]===-1){ picked=cell; break; }
+    }
+    if(!picked) continue;
+    reg[picked[0]][picked[1]]=k; size[k]++; remaining--;
+    addC(k,picked[0],picked[1]);
+  }
+  for(r=0;r<N;r++) for(c=0;c<N;c++) if(reg[r][c]===-1){
+    var got=false;
+    for(var d=0;d<4;d++){ var nr=r+dirs[d][0], nc=c+dirs[d][1]; if(inb(nr,nc)&&reg[nr][nc]>=0){ reg[r][c]=reg[nr][nc]; got=true; break; } }
+    if(!got) reg[r][c]=0;
+  }
+  return reg;
+}
+
+function countSolutions(N, reg, rs, cap){
+  var col=new Array(N).fill(-1), usedCol=new Array(N).fill(false), usedReg=new Array(N).fill(false), count=0;
+  function ok(r,c){
+    if(r>0 && col[r-1]>=0 && Math.abs(col[r-1]-c)<=1) return false;
+    if(rs.diag2 && r>1 && col[r-2]>=0 && Math.abs(col[r-2]-c)===2) return false;
+    return true;
+  }
+  function rec(r){
+    if(count>=cap) return;
+    if(r===N){ count++; return; }
+    for(var c=0;c<N;c++){
+      if(usedCol[c]) continue;
+      var k=reg[r][c];
+      if(usedReg[k]) continue;
+      if(!ok(r,c)) continue;
+      usedCol[c]=true; usedReg[k]=true; col[r]=c;
+      rec(r+1);
+      usedCol[c]=false; usedReg[k]=false; col[r]=-1;
+      if(count>=cap) return;
+    }
+  }
+  rec(0);
+  return count;
+}
+
+function generate(N, rs, seed){
+  var rng=mulberry32(seed>>>0);
+  var rint=function(n){ return Math.floor(rng()*n); };
+  var shuffle=function(a){ for(var i=a.length-1;i>0;i--){ var j=rint(i+1); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; };
+  for(var outer=0; outer<80; outer++){
+    var sol=buildSolution(N,rs,rint,shuffle);
+    if(!sol) continue;
+    for(var inner=0; inner<45; inner++){
+      var reg=growRegions(N,sol,rint);
+      if(countSolutions(N,reg,rs,2)===1){
+        return { N:N, reg:reg, sol:sol, ruleset:rs,
+          colorMap: shuffle(Array.from({length:9},function(_,i){return i;})).slice(0,N),
+          decree:null, guard:null };
+      }
+    }
+  }
+  var s2=buildSolution(N,rs,rint,shuffle)||Array.from({length:N},function(_,i){return i;});
+  return { N:N, reg:growRegions(N,s2,rint), sol:s2, ruleset:rs,
+    colorMap: shuffle(Array.from({length:9},function(_,i){return i;})).slice(0,N),
+    decree:null, guard:null };
+}
+
+/* ---------- Decree metadata ---------- */
+var DECREES = {
+  fog:{ name:"The Fog of War", desc:"Realm colours stay hidden until you touch a square inside them." },
+  guard:{ name:"The Royal Guard", desc:"One fixed Guard holds its square and blocks Queens like a permanent ×." },
+  assassin:{ name:"Assassin’s Range", desc:"Queens also strike a square two steps away along any diagonal." },
+  lock:{ name:"Color Lock", desc:"Placing a Queen auto-marks × on the rest of its realm." },
+  truce:{ name:"Royal Truce", desc:"No decree in force … until the herald returns." }
+};
+
+/* ---------- State ---------- */
+var S = {
+  puzzle:null, N:8, mode:"standard", speed:false, autoX:false, autoXScope:"adjacent",
+  cells:[], els:[], history:[], hi:-1, moves:0,
+  startTs:0, frozen:0, running:false, timerId:null,
+  revealed:new Set(), won:false,
+  isDaily:false, dailyKey:null,
+  speedTimer:null, speedIdx:0,
+  prevConflict:new Set()
+};
+
+/* ---------- Persistence ---------- */
+function loadSettings(){
+  try{
+    var s=JSON.parse(localStorage.getItem("queens.settings")||"{}");
+    if(s.mode) S.mode=s.mode;
+    if(s.N) S.N=s.N;
+    if(typeof s.autoX==="boolean") S.autoX=s.autoX;
+    if(s.autoXScope==="adjacent"||s.autoXScope==="aggressive") S.autoXScope=s.autoXScope;
+    if(typeof s.speed==="boolean") S.speed=s.speed;
+  }catch(e){}
+  try{
+    var t=localStorage.getItem("queens.theme");
+    if(t) document.documentElement.dataset.theme=t;
+  }catch(e){}
+}
+function saveSettings(){
+  try{ localStorage.setItem("queens.settings", JSON.stringify({mode:S.mode,N:S.N,autoX:S.autoX,autoXScope:S.autoXScope,speed:S.speed})); }catch(e){}
+}
+function dailyStore(){ try{ return JSON.parse(localStorage.getItem("queens.daily")||"{}"); }catch(e){ return {}; } }
+function dailySave(o){ try{ localStorage.setItem("queens.daily", JSON.stringify(o)); }catch(e){} }
+function todayStr(){ var d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+
+/* ---------- New puzzle ---------- */
+function newPuzzle(opts){
+  opts = opts || {};
+  var daily = !!opts.daily;
+  var seed, decree=null, ruleset={diag2:false};
+
+  if(daily){
+    var ds=todayStr();
+    seed=hashStr(ds+"|"+S.N);
+    S.isDaily=true; S.dailyKey=ds+"|"+S.N;
+  }else{
+    seed=((Date.now()>>>0) ^ (Math.floor(Math.random()*0xffffffff)))>>>0;
+    S.isDaily=false; S.dailyKey=null;
+    if(S.mode==="decrees"){
+      if(S.speed){ decree="truce"; }
+      else{
+        var pick=["fog","guard","assassin","lock"];
+        decree=pick[Math.floor(mulberry32((seed^0x9e3779b9)>>>0)()*4)];
+        ruleset={diag2: decree==="assassin"};
+      }
+    }
+  }
+
+  var p=generate(S.N, ruleset, seed);
+  p.decree=decree;
+  if(decree==="guard") p.guard=pickGuard(p, seed);
+
+  S.puzzle=p;
+  S.cells=emptyCells(p.N);
+  S.revealed=new Set();
+  var foggy = (decree==="fog");
+  if(!foggy){ for(var k=0;k<p.N;k++) S.revealed.add(k); }
+  S.history=[snapshot()]; S.hi=0;
+  S.moves=0; S.won=false; S.prevConflict=new Set();
+
+  buildBoard();
+  startTimer();
+  setupSpeed();
+  updateModeUI();
+  hideWin();
+  if(decree){ showToast(decree); }
+  paint();
+}
+
+function pickGuard(p, seed){
+  var rng=mulberry32((seed^0x1234abcd)>>>0);
+  for(var t=0;t<400;t++){
+    var r=Math.floor(rng()*p.N), c=Math.floor(rng()*p.N);
+    if(p.sol[r]!==c) return {r:r,c:c};
+  }
+  return {r:0,c:(p.sol[0]+2)%p.N};
+}
+function pickGuardLive(p){
+  for(var t=0;t<600;t++){
+    var r=Math.floor(Math.random()*p.N), c=Math.floor(Math.random()*p.N);
+    if(p.sol[r]!==c && S.cells[r][c].b==="empty") return {r:r,c:c};
+  }
+  return null;
+}
+
+/* ---------- Cell model ----------
+   Each square is { b: "empty" | "manualX" | "queen", o: [ownerKey, …] }
+   where `o` holds the id ("r,c") of every Queen that auto-marked an X here. */
+function mkCell(){ return { b:"empty", o:[] }; }
+function emptyCells(n){
+  var g=[]; for(var r=0;r<n;r++){ var row=[]; for(var c=0;c<n;c++) row.push(mkCell()); g.push(row); } return g;
+}
+function cloneCells(src){
+  return src.map(function(row){ return row.map(function(cell){ return { b:cell.b, o:cell.o.slice() }; }); });
+}
+function disp(cell){ return cell.b==="queen" ? "queen" : (cell.b==="manualX" || cell.o.length) ? "x" : "empty"; }
+function isAutoOnly(cell){ return cell.b==="empty" && cell.o.length>0; }
+
+/* ---------- History ---------- */
+function snapshot(){ return cloneCells(S.cells); }
+function restore(snap){ S.cells = cloneCells(snap); }
+function commit(){
+  var sig=JSON.stringify(S.cells);
+  if(S.history[S.hi] && JSON.stringify(S.history[S.hi])===sig) return false;
+  S.history = S.history.slice(0, S.hi+1);
+  S.history.push(cloneCells(S.cells)); S.hi++;
+  return true;
+}
+function undo(){ if(S.hi>0){ S.hi--; restore(S.history[S.hi]); afterHistory(); } }
+function redo(){ if(S.hi<S.history.length-1){ S.hi++; restore(S.history[S.hi]); afterHistory(); } }
+function afterHistory(){
+  if(S.won){ S.won=false; $("#board").classList.remove("locked"); hideWin(); resumeTimer(); }
+  recomputeAutoX();
+  if(S.puzzle.decree==="fog"){
+    for(var r=0;r<S.N;r++) for(var c=0;c<S.N;c++) if(S.cells[r][c].b!=="empty") S.revealed.add(S.puzzle.reg[r][c]);
+  }
+  paint();
+}
+
+/* ---------- Rules / analysis ---------- */
+function queenList(){
+  var out=[];
+  for(var r=0;r<S.N;r++) for(var c=0;c<S.N;c++) if(S.cells[r][c].b==="queen") out.push([r,c]);
+  return out;
+}
+function analyse(){
+  var N=S.N, p=S.puzzle, qs=queenList();
+  var byRow=new Array(N).fill(0), byCol=new Array(N).fill(0), byReg=new Array(N).fill(0);
+  var conflict=new Set();
+  qs.forEach(function(q){ byRow[q[0]]++; byCol[q[1]]++; byReg[p.reg[q[0]][q[1]]]++; });
+  for(var i=0;i<qs.length;i++) for(var j=i+1;j<qs.length;j++){
+    var a=qs[i], b=qs[j], dr=Math.abs(a[0]-b[0]), dc=Math.abs(a[1]-b[1]);
+    var hit=false;
+    if(Math.max(dr,dc)===1) hit=true;
+    if(p.ruleset.diag2 && dr===2 && dc===2) hit=true;
+    if(hit){ conflict.add(a[0]+","+a[1]); conflict.add(b[0]+","+b[1]); }
+  }
+  qs.forEach(function(q){
+    if(byRow[q[0]]>1||byCol[q[1]]>1||byReg[p.reg[q[0]][q[1]]]>1) conflict.add(q[0]+","+q[1]);
+  });
+  var rowDone=new Array(N), colDone=new Array(N), regDone=new Array(N);
+  for(var k=0;k<N;k++){ rowDone[k]=false; colDone[k]=false; regDone[k]=false; }
+  qs.forEach(function(q){
+    var key=q[0]+","+q[1], clean=!conflict.has(key);
+    if(byRow[q[0]]===1 && clean) rowDone[q[0]]=true;
+    if(byCol[q[1]]===1 && clean) colDone[q[1]]=true;
+    if(byReg[p.reg[q[0]][q[1]]]===1 && clean) regDone[p.reg[q[0]][q[1]]]=true;
+  });
+  var won = qs.length===N && conflict.size===0;
+  return {qs:qs,byRow:byRow,byCol:byCol,byReg:byReg,conflict:conflict,rowDone:rowDone,colDone:colDone,regDone:regDone,won:won};
+}
+/* ---------- Smart Auto-X ----------
+   Every auto-X carries an ownership list of the Queens that placed it. A mark
+   only disappears once no Queen still owns it AND the player never claimed it. */
+
+/* Squares a Queen at (qr,qc) should auto-mark, given the current settings. */
+function autoXTargets(qr,qc){
+  var p=S.puzzle, N=p.N, out=[], i, r2, c2, r, c, d, e;
+  if(S.autoX){
+    for(d=-1;d<=1;d++) for(e=-1;e<=1;e++) if(d||e){
+      r=qr+d; c=qc+e; if(r>=0&&c>=0&&r<N&&c<N) out.push([r,c]);
+    }
+    // The whole rank & file are cleared whenever a Queen is placed.
+    for(i=0;i<N;i++){ out.push([qr,i]); out.push([i,qc]); }
+  }
+  // Aggressive reach, or the Color Lock decree, also covers the colour realm.
+  if((S.autoX && S.autoXScope==="aggressive") || p.decree==="lock"){
+    var reg=p.reg[qr][qc];
+    for(r2=0;r2<N;r2++) for(c2=0;c2<N;c2++) if(p.reg[r2][c2]===reg) out.push([r2,c2]);
+  }
+  return out;
+}
+function applyAutoX(qr,qc){
+  var t=autoXTargets(qr,qc);
+  if(!t.length) return;
+  var key=qr+","+qc;
+  for(var i=0;i<t.length;i++){
+    var cell=S.cells[t[i][0]][t[i][1]];
+    if(cell.b==="empty" && cell.o.indexOf(key)<0) cell.o.push(key);
+  }
+}
+function stripAutoX(qr,qc){
+  var key=qr+","+qc;
+  for(var r=0;r<S.N;r++) for(var c=0;c<S.N;c++){
+    var o=S.cells[r][c].o, idx=o.indexOf(key);
+    if(idx>=0) o.splice(idx,1);
+  }
+}
+/* Rebuild every ownership list from the live Queens + settings. */
+function recomputeAutoX(){
+  for(var r=0;r<S.N;r++) for(var c=0;c<S.N;c++) S.cells[r][c].o.length=0;
+  for(var r2=0;r2<S.N;r2++) for(var c2=0;c2<S.N;c2++) if(S.cells[r2][c2].b==="queen") applyAutoX(r2,c2);
+}
+
+/* ---------- Board DOM ---------- */
+function buildBoard(){
+  var N=S.N, p=S.puzzle;
+  $("#boardWrap").style.setProperty("--n", N);
+  var cn=$("#colNums"), rn=$("#rowNums");
+  cn.innerHTML=""; rn.innerHTML="";
+  for(var i=0;i<N;i++){
+    var a=document.createElement("span"); a.textContent=i+1; cn.appendChild(a);
+    var b=document.createElement("span"); b.textContent=i+1; rn.appendChild(b);
+  }
+  var board=$("#board");
+  board.innerHTML=""; board.classList.remove("locked");
+  S.els=[];
+  for(var r=0;r<N;r++){
+    var row=[];
+    for(var c=0;c<N;c++){
+      var btn=document.createElement("button");
+      btn.className="cell"; btn.type="button";
+      btn.dataset.r=r; btn.dataset.c=c;
+      btn.setAttribute("role","gridcell");
+      btn.innerHTML='<span class="art">'
+        +'<svg class="mk mk-x" viewBox="0 0 20 20"><use href="#i-x"/></svg>'
+        +'<svg class="mk mk-q" viewBox="0 0 20 20"><use href="#i-crown"/></svg>'
+        +'<svg class="mk mk-g" viewBox="0 0 20 20"><use href="#i-guard"/></svg>'
+        +'</span>';
+      board.appendChild(btn);
+      row.push(btn);
+    }
+    S.els.push(row);
+  }
+  var cl=$("#checklist"); cl.innerHTML="";
+  for(var k=0;k<N;k++){
+    var chip=document.createElement("div");
+    chip.className="chip"; chip.dataset.k=k;
+    chip.innerHTML='<span class="sw"></span><span class="lbl">'+roman(k+1)+'</span><span class="tick">&#10003;</span>';
+    cl.appendChild(chip);
+  }
+}
+
+function wallShadow(r,c,revealed){
+  var p=S.puzzle, N=S.N, k=p.reg[r][c];
+  if(!revealed.has(k)) return "";
+  function diff(nr,nc){
+    if(nr<0||nc<0||nr>=N||nc>=N) return true;
+    var nk=p.reg[nr][nc];
+    if(nk!==k) return true;
+    if(!revealed.has(nk)) return true;
+    return false;
+  }
+  var parts=[];
+  if(diff(r-1,c)) parts.push("inset 0 2px 0 0 var(--line-strong)");
+  if(diff(r+1,c)) parts.push("inset 0 -2px 0 0 var(--line-strong)");
+  if(diff(r,c-1)) parts.push("inset 2px 0 0 0 var(--line-strong)");
+  if(diff(r,c+1)) parts.push("inset -2px 0 0 0 var(--line-strong)");
+  return parts.join(",");
+}
+
+/* ---------- Paint ---------- */
+function paint(){
+  var N=S.N, p=S.puzzle, A=analyse(), foggy=(p.decree==="fog");
+
+  for(var r=0;r<N;r++) for(var c=0;c<N;c++){
+    var el=S.els[r][c], cell=S.cells[r][c], key=r+","+c;
+    var isGuard = p.guard && p.guard.r===r && p.guard.c===c;
+    var reg=p.reg[r][c], revealed=S.revealed.has(reg);
+
+    var show = disp(cell);
+    el.dataset.show = show;
+    el.dataset.derived = isAutoOnly(cell) ? "1" : "0";
+    el.dataset.guard = isGuard ? "1" : "0";
+
+    var bg;
+    if(isGuard) bg="var(--guard-bg)";
+    else if(foggy && !revealed) bg="var(--fog)";
+    else bg="var(--z"+(p.colorMap[reg]+1)+")";
+    el.style.setProperty("--cell-bg", bg);
+    el.style.boxShadow = isGuard ? "" : wallShadow(r,c,S.revealed);
+
+    el.classList.toggle("hint-bad", A.conflict.has(key));
+    if(A.conflict.has(key) && !S.prevConflict.has(key)){
+      el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake");
+    }
+
+    var lbl = "Rank "+(r+1)+", file "+(c+1);
+    if(!(foggy && !revealed)) lbl += ", realm "+roman(reg+1);
+    else lbl += ", realm hidden";
+    lbl += ", " + (isGuard ? "royal guard" : show==="queen" ? "queen" : show==="x" ? "marked" : "empty");
+    if(A.conflict.has(key)) lbl += ", rule broken";
+    el.setAttribute("aria-label", lbl);
+  }
+  S.prevConflict = A.conflict;
+
+  var cn=$("#colNums").children, rn=$("#rowNums").children;
+  for(var i=0;i<N;i++){
+    cn[i].classList.toggle("done", A.colDone[i]);
+    rn[i].classList.toggle("done", A.rowDone[i]);
+  }
+
+  var chips=$("#checklist").children;
+  for(var k=0;k<N;k++){
+    var chip=chips[k], sw=chip.querySelector(".sw");
+    var hidden = foggy && !S.revealed.has(k);
+    sw.style.setProperty("--c", hidden ? "var(--fog)" : "var(--z"+(p.colorMap[k]+1)+")");
+    sw.textContent = hidden ? "?" : "";
+    chip.classList.toggle("done", A.regDone[k]);
+  }
+
+  $("#moves").textContent = S.moves;
+  var cs=$("#conflictStat");
+  if(A.conflict.size>0){ cs.hidden=false; $("#conflicts").textContent=A.conflict.size; cs.classList.add("warn"); }
+  else cs.hidden=true;
+
+  var placed=A.qs.length;
+  var msg = placed+" / "+N+" queens placed";
+  if(A.conflict.size>0) msg += " — <b>"+(A.conflict.size)+" in conflict</b>";
+  else if(placed===0) msg = "Tap a square to begin — empty, ×, then crown.";
+  $("#status").innerHTML = msg;
+
+  $("#undoBtn").disabled = S.hi<=0;
+  $("#redoBtn").disabled = S.hi>=S.history.length-1;
+
+  if(A.won && !S.won){ win(A); }
+}
+
+/* ---------- Actions ---------- */
+function reveal(r,c){
+  if(S.puzzle.decree!=="fog") return;
+  var k=S.puzzle.reg[r][c];
+  if(!S.revealed.has(k)) S.revealed.add(k);
+}
+function cellState(r,c){ return S.cells[r][c]; }
+function isGuardCell(r,c){ var g=S.puzzle.guard; return g && g.r===r && g.c===c; }
+
+function doCycle(r,c){
+  if(isGuardCell(r,c)) return bump(r,c);
+  var cell=S.cells[r][c];
+  if(cell.b==="queen"){ cell.b="empty"; stripAutoX(r,c); }
+  else if(cell.b==="manualX"){ cell.b="queen"; applyAutoX(r,c); }
+  else { cell.b="manualX"; }              // empty or auto-only → claim as a manual mark
+  reveal(r,c); S.moves++;
+  finishAction(r,c, cell.b==="queen");
+}
+function doQueen(r,c){
+  if(isGuardCell(r,c)) return bump(r,c);
+  var cell=S.cells[r][c];
+  if(cell.b==="queen"){ cell.b="empty"; stripAutoX(r,c); }
+  else { cell.b="queen"; applyAutoX(r,c); }
+  reveal(r,c); S.moves++;
+  finishAction(r,c, cell.b==="queen");
+}
+function doMark(r,c, mode){ /* used by drag; returns true if changed */
+  if(isGuardCell(r,c)) return false;
+  var cell=S.cells[r][c];
+  if(mode==="mark" && cell.b==="empty"){ cell.b="manualX"; reveal(r,c); return true; }
+  if(mode==="erase" && cell.b==="manualX"){ cell.b="empty"; reveal(r,c); return true; }
+  return false;
+}
+function doContext(r,c){
+  if(isGuardCell(r,c)) return bump(r,c);
+  var cell=S.cells[r][c];
+  if(cell.b==="manualX"){ cell.b="empty"; }
+  else if(cell.b==="empty"){ cell.b="manualX"; }
+  else return;
+  reveal(r,c); S.moves++;
+  finishAction(r,c,false);
+}
+function finishAction(r,c,becameQueen){
+  commit();
+  paint();
+  if(becameQueen && !reduceMotion){
+    var el=S.els[r][c];
+    el.classList.remove("pop"); void el.offsetWidth; el.classList.add("pop");
+    setTimeout(function(){ el.classList.remove("pop"); }, 560);
+  }
+}
+function bump(r,c){
+  var el=S.els[r][c];
+  el.classList.remove("shake"); void el.offsetWidth; el.classList.add("shake");
+}
+function clearBoard(){
+  S.cells = emptyCells(S.N);
+  commit(); paint();
+}
+
+/* ---------- Pointer / input ---------- */
+(function bindInput(){
+  var board=$("#board");
+  var down=null, moved=false, dragMode=null, lastKey=null, changed=0, lp=null, lpFired=false, pending=null;
+
+  function cellFrom(x,y){
+    var e=document.elementFromPoint(x,y);
+    return e ? e.closest(".cell") : null;
+  }
+  function rc(el){ return [parseInt(el.dataset.r,10), parseInt(el.dataset.c,10)]; }
+
+  board.addEventListener("pointerdown", function(e){
+    if(S.won) return;
+    var el=e.target.closest(".cell"); if(!el) return;
+    e.preventDefault();
+    down=el; moved=false; dragMode=null; changed=0; lpFired=false;
+    lastKey=el.dataset.r+","+el.dataset.c;
+    try{ board.setPointerCapture(e.pointerId); }catch(_){}
+    var p=rc(el);
+    lp=setTimeout(function(){
+      if(moved||lpFired) return;
+      lpFired=true;
+      if(pending){ clearTimeout(pending.t); pending=null; }
+      doQueen(p[0],p[1]);
+    }, 480);
+  });
+
+  board.addEventListener("pointermove", function(e){
+    if(!down || S.won) return;
+    var el=cellFrom(e.clientX, e.clientY);
+    if(!el) return;
+    var key=el.dataset.r+","+el.dataset.c;
+    if(!moved){
+      if(key===lastKey) return;
+      moved=true;
+      if(lp){ clearTimeout(lp); lp=null; }
+      var d=rc(down);
+      dragMode = (S.cells[d[0]][d[1]].b==="manualX") ? "erase" : "mark";
+      if(doMark(d[0],d[1],dragMode)) changed++;
+    }
+    if(key===lastKey) return;
+    lastKey=key;
+    var p=rc(el);
+    if(doMark(p[0],p[1],dragMode)){ changed++; }
+    paint();
+  });
+
+  function end(e){
+    if(!down) return;
+    if(lp){ clearTimeout(lp); lp=null; }
+    try{ board.releasePointerCapture(e.pointerId); }catch(_){}
+    var el=down; down=null;
+    if(lpFired){ return; }
+    if(moved){
+      if(changed>0){ S.moves += changed; commit(); paint(); }
+      return;
+    }
+    var p=rc(el);
+    if(pending){ clearTimeout(pending.t); }
+    pending={ r:p[0], c:p[1], t:setTimeout(function(){
+      pending=null; doCycle(p[0],p[1]);
+    }, 200) };
+  }
+  board.addEventListener("pointerup", end);
+  board.addEventListener("pointercancel", function(e){
+    if(lp){ clearTimeout(lp); lp=null; }
+    down=null; moved=false;
+  });
+
+  board.addEventListener("dblclick", function(e){
+    var el=e.target.closest(".cell"); if(!el || S.won) return;
+    if(pending){ clearTimeout(pending.t); pending=null; }
+    var p=rc(el);
+    doQueen(p[0],p[1]);
+  });
+  board.addEventListener("contextmenu", function(e){
+    e.preventDefault();
+    var el=e.target.closest(".cell"); if(!el || S.won) return;
+    var p=rc(el); doContext(p[0],p[1]);
+  });
+
+  board.addEventListener("keydown", function(e){
+    var el=e.target.closest(".cell"); if(!el) return;
+    var r=parseInt(el.dataset.r,10), c=parseInt(el.dataset.c,10), nr=r, nc=c;
+    if(e.key==="ArrowUp") nr--; else if(e.key==="ArrowDown") nr++;
+    else if(e.key==="ArrowLeft") nc--; else if(e.key==="ArrowRight") nc++;
+    else if(e.key==="Enter"||e.key===" "){ e.preventDefault(); if(!S.won) doCycle(r,c); return; }
+    else return;
+    e.preventDefault();
+    if(nr<0||nc<0||nr>=S.N||nc>=S.N) return;
+    S.els[nr][nc].focus();
+  });
+})();
+
+/* ---------- Timer ---------- */
+function fmt(ms){ var t=Math.floor(ms/1000); return Math.floor(t/60)+":"+String(t%60).padStart(2,"0"); }
+function elapsed(){ return S.frozen + (S.running ? performance.now()-S.startTs : 0); }
+function tick(){ $("#time").textContent = fmt(elapsed()); }
+function startTimer(){
+  if(S.timerId) clearInterval(S.timerId);
+  S.startTs=performance.now(); S.frozen=0; S.running=true;
+  S.timerId=setInterval(tick,200); tick();
+}
+function pauseTimer(){ if(S.running){ S.frozen=elapsed(); S.running=false; } }
+function resumeTimer(){ if(!S.running && !S.won){ S.startTs=performance.now(); S.running=true; } }
+function stopTimer(){ pauseTimer(); if(S.timerId){ clearInterval(S.timerId); S.timerId=null; } }
+
+/* ---------- Speed decrees ---------- */
+function setupSpeed(){
+  if(S.speedTimer){ clearInterval(S.speedTimer); S.speedTimer=null; }
+  if(S.mode==="decrees" && S.speed && !S.isDaily && S.puzzle){
+    S.speedIdx=0;
+    S.speedTimer=setInterval(rotateDecree, 30000);
+  }
+}
+function rotateDecree(){
+  if(S.won) return;
+  var seq=["fog","guard","lock","truce"];
+  S.speedIdx=(S.speedIdx+1)%seq.length;
+  var d=seq[S.speedIdx], p=S.puzzle;
+  if(p.decree==="guard" && d!=="guard") p.guard=null;
+  p.decree=d;
+  if(d==="fog"){
+    S.revealed=new Set();
+    for(var r=0;r<S.N;r++) for(var c=0;c<S.N;c++) if(S.cells[r][c].b!=="empty") S.revealed.add(p.reg[r][c]);
+  }else{
+    for(var k=0;k<S.N;k++) S.revealed.add(k);
+  }
+  if(d==="guard" && !p.guard){ p.guard=pickGuardLive(p); }
+  recomputeAutoX();   // Color Lock may have switched on/off
+  showToast(d);
+  updateModeUI();
+  paint();
+}
+
+/* ---------- Toast ---------- */
+var toastT=null;
+function showToast(dk){
+  var m=DECREES[dk]; if(!m) return;
+  $("#toastName").textContent=m.name;
+  $("#toastDesc").textContent=m.desc;
+  var t=$("#toast"); t.classList.add("show");
+  if(toastT) clearTimeout(toastT);
+  toastT=setTimeout(function(){ t.classList.remove("show"); }, 4200);
+}
+
+/* ---------- Mode / panel UI ---------- */
+function updateModeUI(){
+  $("#modeStd").setAttribute("aria-pressed", S.mode==="standard");
+  $("#modeDec").setAttribute("aria-pressed", S.mode==="decrees");
+  $("#speedGroup").hidden = S.mode!=="decrees";
+  $("#speedChk").checked = S.speed;
+  $("#autoxBtn").setAttribute("aria-pressed", S.autoX);
+  $("#axAdj").setAttribute("aria-pressed", S.autoXScope==="adjacent");
+  $("#axAgg").setAttribute("aria-pressed", S.autoXScope==="aggressive");
+  $("#autoxGroup").style.opacity = S.autoX ? "1" : ".45";
+
+  document.querySelectorAll("[data-size]").forEach(function(b){
+    b.setAttribute("aria-pressed", parseInt(b.dataset.size,10)===S.N);
+  });
+
+  var card=$("#decreeCard"), p=S.puzzle;
+  var dk = (S.mode==="decrees" && p && p.decree) ? p.decree : null;
+  if(dk){
+    card.classList.remove("plain");
+    $("#decreeEyebrow").textContent = S.speed ? "Decree · rotating" : "Decree in force";
+    $("#decreeName").textContent = DECREES[dk].name;
+    $("#decreeDesc").textContent = DECREES[dk].desc;
+  }else{
+    card.classList.add("plain");
+    $("#decreeEyebrow").textContent = "Rules";
+    $("#decreeName").textContent = "Standard rules";
+    $("#decreeDesc").textContent = "One Queen per rank, file and realm. No two Queens may touch.";
+  }
+
+  var ds=dailyStore(), key=todayStr()+"|"+S.N;
+  $("#dailyLbl").textContent = ds[key] ? "Daily ✓" : "Daily";
+}
+
+/* ---------- Win ---------- */
+function win(A){
+  S.won=true;
+  stopTimer();
+  $("#board").classList.add("locked");
+  var b=$("#board"); b.classList.remove("solved"); void b.offsetWidth; b.classList.add("solved");
+  paintDone();
+  var ms=elapsed();
+  $("#winTime").textContent=fmt(ms);
+  $("#winMoves").textContent=S.moves;
+  $("#winBoard").textContent=S.N+"×"+S.N;
+  var tag = S.isDaily ? ("Daily · "+todayStr())
+    : (S.mode==="decrees" && S.puzzle.decree ? DECREES[S.puzzle.decree].name : "Standard");
+  $("#winSub").textContent = tag;
+  if(S.isDaily && S.dailyKey){
+    var store=dailyStore();
+    if(!store[S.dailyKey]) { store[S.dailyKey]={time:fmt(ms),moves:S.moves}; dailySave(store); }
+  }
+  updateModeUI();
+  setTimeout(function(){ $("#winScrim").hidden=false; confetti(); }, reduceMotion?0:420);
+}
+function paintDone(){
+  var A=analyse(), N=S.N, cn=$("#colNums").children, rn=$("#rowNums").children;
+  for(var i=0;i<N;i++){ cn[i].classList.toggle("done",A.colDone[i]); rn[i].classList.toggle("done",A.rowDone[i]); }
+}
+function hideWin(){ $("#winScrim").hidden=true; }
+
+/* ---------- Confetti ---------- */
+function confetti(){
+  var cv=$("#fx");
+  if(reduceMotion){ return; }
+  var ctx=cv.getContext("2d");
+  var W=cv.width=innerWidth, H=cv.height=innerHeight;
+  var cs=getComputedStyle(document.documentElement);
+  var cols=["--accent","--gold","--z1","--z3","--z4","--z5","--z7"].map(function(v){ return cs.getPropertyValue(v).trim()||"#888"; });
+  var P=[];
+  for(var i=0;i<160;i++){
+    P.push({ x:Math.random()*W, y:-20-Math.random()*H*0.4,
+      vx:(Math.random()-0.5)*4, vy:2+Math.random()*4,
+      s:5+Math.random()*8, rot:Math.random()*6.28, vr:(Math.random()-0.5)*0.4,
+      col:cols[(Math.random()*cols.length)|0] });
+  }
+  var t0=performance.now();
+  function frame(now){
+    var life=now-t0;
+    ctx.clearRect(0,0,W,H);
+    var alive=false;
+    for(var i=0;i<P.length;i++){
+      var p=P[i];
+      p.vy+=0.12; p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr;
+      if(p.y<H+30) alive=true;
+      ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+      ctx.globalAlpha = Math.max(0, 1-life/3200);
+      ctx.fillStyle=p.col;
+      ctx.fillRect(-p.s/2,-p.s/2,p.s,p.s*0.6);
+      ctx.restore();
+    }
+    if(alive && life<3600) requestAnimationFrame(frame);
+    else ctx.clearRect(0,0,W,H);
+  }
+  requestAnimationFrame(frame);
+}
+
+/* ---------- Modal helpers ---------- */
+function openModal(id){ pauseTimer(); $(id).hidden=false; }
+function closeModal(id){ $(id).hidden=true; resumeTimer(); }
+
+/* ---------- Theme ---------- */
+function effectiveTheme(){
+  return document.documentElement.dataset.theme || (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+}
+function themeIcon(){
+  var dark = effectiveTheme()==="dark";
+  $("#themeIcon").innerHTML = dark
+    ? '<circle cx="10" cy="10" r="4"/><path d="M10 1.5v2.2M10 16.3v2.2M2.4 10h2.2M15.4 10h2.2M4.3 4.3l1.5 1.5M14.2 14.2l1.5 1.5M15.7 4.3l-1.5 1.5M5.8 14.2l-1.5 1.5"/>'
+    : '<path d="M16.5 11.2A6.6 6.6 0 0 1 8.8 3.5 6.6 6.6 0 1 0 16.5 11.2Z"/>';
+}
+
+/* ---------- Wire up ---------- */
+$("#modeStd").addEventListener("click", function(){ if(S.mode==="standard") return; S.mode="standard"; S.speed=false; saveSettings(); newPuzzle(); });
+$("#modeDec").addEventListener("click", function(){ if(S.mode==="decrees") return; S.mode="decrees"; saveSettings(); newPuzzle(); });
+document.querySelectorAll("[data-size]").forEach(function(b){
+  b.addEventListener("click", function(){
+    var n=parseInt(b.dataset.size,10); if(n===S.N) return;
+    S.N=n; saveSettings(); newPuzzle();
+  });
+});
+$("#newBtn").addEventListener("click", function(){ newPuzzle(); });
+$("#dailyBtn").addEventListener("click", function(){ newPuzzle({daily:true}); });
+$("#speedChk").addEventListener("change", function(){ S.speed=$("#speedChk").checked; saveSettings(); newPuzzle(); });
+$("#undoBtn").addEventListener("click", undo);
+$("#redoBtn").addEventListener("click", redo);
+$("#clearBtn").addEventListener("click", clearBoard);
+$("#autoxBtn").addEventListener("click", function(){
+  S.autoX=!S.autoX; saveSettings(); recomputeAutoX(); updateModeUI(); paint();
+});
+function setAutoXScope(scope){
+  if(S.autoXScope===scope) return;
+  S.autoXScope=scope; saveSettings(); recomputeAutoX(); updateModeUI(); paint();
+}
+$("#axAdj").addEventListener("click", function(){ setAutoXScope("adjacent"); });
+$("#axAgg").addEventListener("click", function(){ setAutoXScope("aggressive"); });
+$("#helpBtn").addEventListener("click", function(){ openModal("#helpScrim"); });
+$("#helpClose").addEventListener("click", function(){ closeModal("#helpScrim"); });
+$("#helpScrim").addEventListener("click", function(e){ if(e.target===this) closeModal("#helpScrim"); });
+$("#winNew").addEventListener("click", function(){ hideWin(); newPuzzle(); });
+$("#winReview").addEventListener("click", function(){ hideWin(); });
+$("#themeBtn").addEventListener("click", function(){
+  var t = effectiveTheme()==="dark" ? "light" : "dark";
+  document.documentElement.dataset.theme=t;
+  try{ localStorage.setItem("queens.theme",t); }catch(e){}
+  themeIcon();
+});
+document.addEventListener("keydown", function(e){
+  if(e.key==="Escape"){
+    if(!$("#helpScrim").hidden) closeModal("#helpScrim");
+    else if(!$("#winScrim").hidden) hideWin();
+  }
+  var mod = e.metaKey||e.ctrlKey;
+  if(mod && e.key.toLowerCase()==="z"){ e.preventDefault(); if(e.shiftKey) redo(); else undo(); }
+  else if(mod && e.key.toLowerCase()==="y"){ e.preventDefault(); redo(); }
+});
+document.addEventListener("visibilitychange", function(){
+  if(document.hidden) pauseTimer();
+  else if($("#helpScrim").hidden && $("#winScrim").hidden) resumeTimer();
+});
+addEventListener("resize", function(){ if(!$("#winScrim").hidden){ var c=$("#fx"); c.width=innerWidth; c.height=innerHeight; } });
+
+/* ---------- Boot ---------- */
+loadSettings();
+themeIcon();
+updateModeUI();
+newPuzzle();
+})();
+</script>

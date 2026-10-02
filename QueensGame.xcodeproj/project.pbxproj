@@ -1,0 +1,639 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		033025C8176EF0831EE160A5 /* AnimatedBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D6D1C49134BC4425B96AA2F /* AnimatedBackground.swift */; };
+		059DC2FFD86F6AC128A16365 /* StatsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3A269C95DCEAE0633E197C0 /* StatsStore.swift */; };
+		0C9B4B76C4A0D84F4B29428E /* GameModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73B336469B113F11F2E43D4E /* GameModels.swift */; };
+		500E6871CD863ADE211A545B /* Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F5DFF78ED7B5FC045EB4070 /* Theme.swift */; };
+		61B210C694FB75A0A5C773A9 /* DecreeBanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D984F8E0633412E8020F82ED /* DecreeBanner.swift */; };
+		65D91923FE0A51627F2171F7 /* ConfettiOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48C99892189CF077835733A /* ConfettiOverlay.swift */; };
+		7241933CABADFAC5FA329182 /* QueensGameApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B5998A2E213066282167956 /* QueensGameApp.swift */; };
+		852F7CFD0373EDA6C04B1428 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0DDEC70ECB2FDF7BB48B9B0 /* Haptics.swift */; };
+		9ABD2EB3AC2BA1C8BF63AFB5 /* PuzzleGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABF0C64D2FC2EDD62F4D83DB /* PuzzleGenerator.swift */; };
+		9B29270CB2B26E7E0A70B775 /* QueensGameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B8146596A2B0723F0D4FEAB /* QueensGameUITests.swift */; };
+		A696EE79A6DA8401086A581E /* BoardArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC91F007E9C87F2AAB7718F /* BoardArea.swift */; };
+		B1C7B9751DE7369247AFF4F8 /* QueensGameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1002041D02A4C125F8662A79 /* QueensGameTests.swift */; };
+		B562D518A61B3FFE608ED94B /* RealmChips.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABB8468E8611D87879ABB6F /* RealmChips.swift */; };
+		BEF38620EF033A0A839372E0 /* ControlDock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C3C6D44488273BBB1A43C67 /* ControlDock.swift */; };
+		C441843BDE5C337D4690200C /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54CFB196B8EC8F1E4F679E08 /* RootView.swift */; };
+		D012C5E19E96F64B0F602D40 /* QueensGameViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 28D016F8641A22F5F1F20447 /* QueensGameViewModel.swift */; };
+		E0F06C5FB5C885C3136EE598 /* BoardRules.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87CFDC1AF09D1BB530BD39E7 /* BoardRules.swift */; };
+		E9A02E4D2DFF874EF84F3ABE /* GameOverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = FD5E067240051F5B9A3196C6 /* GameOverView.swift */; };
+		F38641E966C68FAC6FC4308D /* ShakeEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF4BD65D039FF607E55ECE14 /* ShakeEffect.swift */; };
+		F99F75EF8AF0A69743DB1BD2 /* HowToPlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D75C1761540F21AC50B65230 /* HowToPlayView.swift */; };
+		FFEDF26C47125D67B26835FA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A873851CF790E2A3E7D85A8 /* Assets.xcassets */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		693003EB3B194F4204DF9A0A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88D45BB2DA1056E49ED34CAD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F87E99926103308CAAE7407D;
+			remoteInfo = QueensGame;
+		};
+		743A3435695F58BC9624DF4B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 88D45BB2DA1056E49ED34CAD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = F87E99926103308CAAE7407D;
+			remoteInfo = QueensGame;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0D6D1C49134BC4425B96AA2F /* AnimatedBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatedBackground.swift; sourceTree = "<group>"; };
+		1002041D02A4C125F8662A79 /* QueensGameTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensGameTests.swift; sourceTree = "<group>"; };
+		1A007F1250313FB909DAB5FD /* QueensGameTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QueensGameTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		28D016F8641A22F5F1F20447 /* QueensGameViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensGameViewModel.swift; sourceTree = "<group>"; };
+		2B8146596A2B0723F0D4FEAB /* QueensGameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensGameUITests.swift; sourceTree = "<group>"; };
+		54CFB196B8EC8F1E4F679E08 /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
+		5ABB8468E8611D87879ABB6F /* RealmChips.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmChips.swift; sourceTree = "<group>"; };
+		6A873851CF790E2A3E7D85A8 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		73B336469B113F11F2E43D4E /* GameModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameModels.swift; sourceTree = "<group>"; };
+		87CFDC1AF09D1BB530BD39E7 /* BoardRules.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardRules.swift; sourceTree = "<group>"; };
+		8B5998A2E213066282167956 /* QueensGameApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueensGameApp.swift; sourceTree = "<group>"; };
+		8C3C6D44488273BBB1A43C67 /* ControlDock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlDock.swift; sourceTree = "<group>"; };
+		9F5DFF78ED7B5FC045EB4070 /* Theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Theme.swift; sourceTree = "<group>"; };
+		A0DDEC70ECB2FDF7BB48B9B0 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		A94EBDD8ABDFF0DCB0EB8D73 /* QueensGameUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = QueensGameUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ABF0C64D2FC2EDD62F4D83DB /* PuzzleGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PuzzleGenerator.swift; sourceTree = "<group>"; };
+		B3A269C95DCEAE0633E197C0 /* StatsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsStore.swift; sourceTree = "<group>"; };
+		B48C99892189CF077835733A /* ConfettiOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfettiOverlay.swift; sourceTree = "<group>"; };
+		BE4F835B1904BB7930FD5EF8 /* QueensGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = QueensGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D75C1761540F21AC50B65230 /* HowToPlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToPlayView.swift; sourceTree = "<group>"; };
+		D984F8E0633412E8020F82ED /* DecreeBanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecreeBanner.swift; sourceTree = "<group>"; };
+		E771E27C499FCF7AD0D7E518 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		EBC91F007E9C87F2AAB7718F /* BoardArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoardArea.swift; sourceTree = "<group>"; };
+		EF4BD65D039FF607E55ECE14 /* ShakeEffect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShakeEffect.swift; sourceTree = "<group>"; };
+		FD5E067240051F5B9A3196C6 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		169BF904E0039465883AB082 /* QueensGameUITests */ = {
+			isa = PBXGroup;
+			children = (
+				2B8146596A2B0723F0D4FEAB /* QueensGameUITests.swift */,
+			);
+			path = QueensGameUITests;
+			sourceTree = "<group>";
+		};
+		1C2A9B86186165BF6F1B786B /* App */ = {
+			isa = PBXGroup;
+			children = (
+				8B5998A2E213066282167956 /* QueensGameApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		2CAEF0B61F65034146DFBDB0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0D6D1C49134BC4425B96AA2F /* AnimatedBackground.swift */,
+				EBC91F007E9C87F2AAB7718F /* BoardArea.swift */,
+				B48C99892189CF077835733A /* ConfettiOverlay.swift */,
+				8C3C6D44488273BBB1A43C67 /* ControlDock.swift */,
+				D984F8E0633412E8020F82ED /* DecreeBanner.swift */,
+				FD5E067240051F5B9A3196C6 /* GameOverView.swift */,
+				D75C1761540F21AC50B65230 /* HowToPlayView.swift */,
+				5ABB8468E8611D87879ABB6F /* RealmChips.swift */,
+				54CFB196B8EC8F1E4F679E08 /* RootView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		37BC7D381CAB1EA664A12071 /* QueensGame */ = {
+			isa = PBXGroup;
+			children = (
+				6A873851CF790E2A3E7D85A8 /* Assets.xcassets */,
+				E771E27C499FCF7AD0D7E518 /* Info.plist */,
+				1C2A9B86186165BF6F1B786B /* App */,
+				A9649BA2830E9384C1DDE941 /* Models */,
+				D7A06439946E68658AC0EF02 /* Services */,
+				B305566B124A25894E2B71C2 /* Support */,
+				41787EC0F62ADEE08EC1769E /* ViewModels */,
+				2CAEF0B61F65034146DFBDB0 /* Views */,
+			);
+			path = QueensGame;
+			sourceTree = "<group>";
+		};
+		41787EC0F62ADEE08EC1769E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				28D016F8641A22F5F1F20447 /* QueensGameViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		5DBD76A0D15C902F1B599F77 = {
+			isa = PBXGroup;
+			children = (
+				37BC7D381CAB1EA664A12071 /* QueensGame */,
+				F8BDE4E89037E04F53BE2742 /* QueensGameTests */,
+				169BF904E0039465883AB082 /* QueensGameUITests */,
+				BE6DA6C1C79F65D0B7E5232F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A9649BA2830E9384C1DDE941 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				87CFDC1AF09D1BB530BD39E7 /* BoardRules.swift */,
+				73B336469B113F11F2E43D4E /* GameModels.swift */,
+				ABF0C64D2FC2EDD62F4D83DB /* PuzzleGenerator.swift */,
+				B3A269C95DCEAE0633E197C0 /* StatsStore.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		B305566B124A25894E2B71C2 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				EF4BD65D039FF607E55ECE14 /* ShakeEffect.swift */,
+				9F5DFF78ED7B5FC045EB4070 /* Theme.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		BE6DA6C1C79F65D0B7E5232F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BE4F835B1904BB7930FD5EF8 /* QueensGame.app */,
+				1A007F1250313FB909DAB5FD /* QueensGameTests.xctest */,
+				A94EBDD8ABDFF0DCB0EB8D73 /* QueensGameUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D7A06439946E68658AC0EF02 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				A0DDEC70ECB2FDF7BB48B9B0 /* Haptics.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		F8BDE4E89037E04F53BE2742 /* QueensGameTests */ = {
+			isa = PBXGroup;
+			children = (
+				1002041D02A4C125F8662A79 /* QueensGameTests.swift */,
+			);
+			path = QueensGameTests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		42A38678F3C0750C81A5B007 /* QueensGameTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D25E5133AAB6A7AFD296E428 /* Build configuration list for PBXNativeTarget "QueensGameTests" */;
+			buildPhases = (
+				37AFF0EC1C3783B9B0740AD6 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4C18DDBA2E437A8781545A63 /* PBXTargetDependency */,
+			);
+			name = QueensGameTests;
+			packageProductDependencies = (
+			);
+			productName = QueensGameTests;
+			productReference = 1A007F1250313FB909DAB5FD /* QueensGameTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		85A5167C3F8D968C936D7BC2 /* QueensGameUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 832AA7FAAF498DF1656A4BA7 /* Build configuration list for PBXNativeTarget "QueensGameUITests" */;
+			buildPhases = (
+				B0DDE4D002F491193C86F853 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				08F383E877E186B9A34D7A46 /* PBXTargetDependency */,
+			);
+			name = QueensGameUITests;
+			packageProductDependencies = (
+			);
+			productName = QueensGameUITests;
+			productReference = A94EBDD8ABDFF0DCB0EB8D73 /* QueensGameUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		F87E99926103308CAAE7407D /* QueensGame */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 613F23E3816BEFC7E23F1091 /* Build configuration list for PBXNativeTarget "QueensGame" */;
+			buildPhases = (
+				1082C5B23D832E80ECDFEB52 /* Sources */,
+				04A56D3C0277427F1C98E47D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = QueensGame;
+			packageProductDependencies = (
+			);
+			productName = QueensGame;
+			productReference = BE4F835B1904BB7930FD5EF8 /* QueensGame.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		88D45BB2DA1056E49ED34CAD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					42A38678F3C0750C81A5B007 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+					85A5167C3F8D968C936D7BC2 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+						TestTargetID = F87E99926103308CAAE7407D;
+					};
+					F87E99926103308CAAE7407D = {
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 734656A90B709F997BC0A6C1 /* Build configuration list for PBXProject "QueensGame" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = 5DBD76A0D15C902F1B599F77;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = BE6DA6C1C79F65D0B7E5232F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F87E99926103308CAAE7407D /* QueensGame */,
+				42A38678F3C0750C81A5B007 /* QueensGameTests */,
+				85A5167C3F8D968C936D7BC2 /* QueensGameUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		04A56D3C0277427F1C98E47D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FFEDF26C47125D67B26835FA /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1082C5B23D832E80ECDFEB52 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				033025C8176EF0831EE160A5 /* AnimatedBackground.swift in Sources */,
+				A696EE79A6DA8401086A581E /* BoardArea.swift in Sources */,
+				E0F06C5FB5C885C3136EE598 /* BoardRules.swift in Sources */,
+				65D91923FE0A51627F2171F7 /* ConfettiOverlay.swift in Sources */,
+				BEF38620EF033A0A839372E0 /* ControlDock.swift in Sources */,
+				61B210C694FB75A0A5C773A9 /* DecreeBanner.swift in Sources */,
+				0C9B4B76C4A0D84F4B29428E /* GameModels.swift in Sources */,
+				E9A02E4D2DFF874EF84F3ABE /* GameOverView.swift in Sources */,
+				852F7CFD0373EDA6C04B1428 /* Haptics.swift in Sources */,
+				F99F75EF8AF0A69743DB1BD2 /* HowToPlayView.swift in Sources */,
+				9ABD2EB3AC2BA1C8BF63AFB5 /* PuzzleGenerator.swift in Sources */,
+				7241933CABADFAC5FA329182 /* QueensGameApp.swift in Sources */,
+				D012C5E19E96F64B0F602D40 /* QueensGameViewModel.swift in Sources */,
+				B562D518A61B3FFE608ED94B /* RealmChips.swift in Sources */,
+				C441843BDE5C337D4690200C /* RootView.swift in Sources */,
+				F38641E966C68FAC6FC4308D /* ShakeEffect.swift in Sources */,
+				059DC2FFD86F6AC128A16365 /* StatsStore.swift in Sources */,
+				500E6871CD863ADE211A545B /* Theme.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		37AFF0EC1C3783B9B0740AD6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B1C7B9751DE7369247AFF4F8 /* QueensGameTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B0DDE4D002F491193C86F853 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9B29270CB2B26E7E0A70B775 /* QueensGameUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		08F383E877E186B9A34D7A46 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F87E99926103308CAAE7407D /* QueensGame */;
+			targetProxy = 693003EB3B194F4204DF9A0A /* PBXContainerItemProxy */;
+		};
+		4C18DDBA2E437A8781545A63 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = F87E99926103308CAAE7407D /* QueensGame */;
+			targetProxy = 743A3435695F58BC9624DF4B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		001B2C0E356B480819F5C9A3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.queensgame.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QueensGame.app/QueensGame";
+			};
+			name = Release;
+		};
+		20A82BEF0C21F323AE84A135 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = ARD27K945A;
+				INFOPLIST_FILE = QueensGame/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sargisgevorgyan.queensgame;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		604A376E8CC708EA11928673 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.queensgame.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/QueensGame.app/QueensGame";
+			};
+			name = Debug;
+		};
+		6EF89673F988A7B77D9DC737 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		9EDC022D863B47B823EBA9BB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				DEVELOPMENT_TEAM = ARD27K945A;
+				INFOPLIST_FILE = QueensGame/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sargisgevorgyan.queensgame;
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C871332484263CDD3AF10599 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.queensgame.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = QueensGame;
+			};
+			name = Release;
+		};
+		E232E8BF71FB7C2B27D80A9E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		EB36E0934EAE6E7A919C27F3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.app.queensgame.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = QueensGame;
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		613F23E3816BEFC7E23F1091 /* Build configuration list for PBXNativeTarget "QueensGame" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9EDC022D863B47B823EBA9BB /* Debug */,
+				20A82BEF0C21F323AE84A135 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		734656A90B709F997BC0A6C1 /* Build configuration list for PBXProject "QueensGame" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6EF89673F988A7B77D9DC737 /* Debug */,
+				E232E8BF71FB7C2B27D80A9E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		832AA7FAAF498DF1656A4BA7 /* Build configuration list for PBXNativeTarget "QueensGameUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EB36E0934EAE6E7A919C27F3 /* Debug */,
+				C871332484263CDD3AF10599 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D25E5133AAB6A7AFD296E428 /* Build configuration list for PBXNativeTarget "QueensGameTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				604A376E8CC708EA11928673 /* Debug */,
+				001B2C0E356B480819F5C9A3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 88D45BB2DA1056E49ED34CAD /* Project object */;
+}
