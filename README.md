@@ -42,6 +42,32 @@ clear / win flow.
 
 ---
 
+## Android
+
+A native Android version lives in [`android/`](android/): **Kotlin + Jetpack
+Compose**, same rules, generator, Royal Decrees, Smart Auto-X, undo/redo, timer,
+stats and themes.
+
+```bash
+cd android
+./gradlew :core:test           # game-logic unit tests (plain JVM, no SDK needed)
+./gradlew :app:assembleDebug   # needs the Android SDK (or open android/ in Android Studio)
+```
+
+- `android/core` is a pure-Kotlin port of `Models/` + the view model's game logic
+  (`GameEngine`), with 38 JVM unit tests mirroring `QueensGameTests`.
+- `android/app` is the Compose UI, `GameViewModel`, and the Play Billing
+  `PremiumStore`.
+- The seeded RNG reproduces Swift's `Int.random(in:using:)` / `shuffle(using:)`
+  algorithms, so a Daily puzzle is meant to match the iOS one for the same date
+  and size.
+- **Royal Pass** is a one-time in-app product with id `com.app.queensgame.premium`
+  (same as iOS). Create it in the Play Console as a one-time product; test with a
+  license-tester account on an internal-testing build.
+- CI (`.github/workflows/android.yml`) runs the tests and uploads a debug APK.
+
+---
+
 ## How it plays
 
 | Gesture | Action |
