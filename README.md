@@ -9,6 +9,8 @@ same puzzle engine, same palette, same feature set.
 
 **▶ Play the web version:** https://sargisgevorgyan.github.io/QueensGame/
 
+**📖 Documentation:** [`docs/`](docs/README.md): rules, architecture, puzzle generator, building and contributing.
+
 ---
 
 ## Run it
