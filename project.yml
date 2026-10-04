@@ -64,6 +64,7 @@ schemes:
         QueensGameUITests: [test]
     run:
       config: Debug
+      storeKitConfiguration: QueensGame.storekit
     test:
       config: Debug
       gatherCoverageData: true

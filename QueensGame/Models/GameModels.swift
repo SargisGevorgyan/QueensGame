@@ -62,6 +62,8 @@ enum GameMode: String, CaseIterable, Identifiable {
     case decrees
     var id: String { rawValue }
     var title: String { self == .standard ? "Standard" : "Royal Decrees" }
+    /// Royal Decrees is part of the one-time Royal Pass unlock.
+    var requiresPremium: Bool { self == .decrees }
 }
 
 /// Light / dark / follow-system.

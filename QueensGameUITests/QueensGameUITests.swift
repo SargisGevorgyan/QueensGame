@@ -11,8 +11,15 @@ final class QueensGameUITests: XCTestCase {
         continueAfterFailure = false
     }
 
-    func testLaunchShowsBoardModeToggleAndAutoX() {
+    /// Launches with the Royal Pass unlocked (DEBUG-only launch argument).
+    private func premiumApp() -> XCUIApplication {
         let app = XCUIApplication()
+        app.launchArguments += ["-UITestPremium"]
+        return app
+    }
+
+    func testLaunchShowsBoardModeToggleAndAutoX() {
+        let app = premiumApp()
         app.launch()
 
         XCTAssertTrue(app.buttons["Standard"].waitForExistence(timeout: 5))
@@ -21,7 +28,7 @@ final class QueensGameUITests: XCTestCase {
     }
 
     func testAutoXToggleAndDecreesModeKeepBoardInteractive() {
-        let app = XCUIApplication()
+        let app = premiumApp()
         app.launch()
 
         let autoX = app.buttons["Auto-X"]
@@ -31,5 +38,18 @@ final class QueensGameUITests: XCTestCase {
         app.buttons["Royal Decrees"].tap()
         XCTAssertTrue(app.buttons["Clear board"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["Auto-X"].exists)
+    }
+
+    func testLockedDecreesOpensPaywall() {
+        let app = XCUIApplication()
+        app.launch()
+
+        let locked = app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Royal Decrees'")).firstMatch
+        XCTAssertTrue(locked.waitForExistence(timeout: 5))
+        locked.tap()
+
+        XCTAssertTrue(app.buttons["paywall.restore"].waitForExistence(timeout: 5))
+        app.buttons["Close"].tap()
+        XCTAssertTrue(app.buttons["Clear board"].waitForExistence(timeout: 5))
     }
 }

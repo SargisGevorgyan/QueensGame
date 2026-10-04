@@ -7,6 +7,7 @@ import SwiftUI
 
 struct RootView: View {
     @EnvironmentObject private var vm: QueensGameViewModel
+    @EnvironmentObject private var store: PremiumStore
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
@@ -20,8 +21,10 @@ struct RootView: View {
                     VStack(spacing: 14) {
                         header
 
-                        Picker("Mode", selection: $vm.mode) {
-                            ForEach(GameMode.allCases) { Text($0.title).tag($0) }
+                        Picker("Mode", selection: modeSelection) {
+                            ForEach(GameMode.allCases) { mode in
+                                Text(store.canPlay(mode) ? mode.title : "\(mode.title) 🔒").tag(mode)
+                            }
                         }
                         .pickerStyle(.segmented)
 
@@ -53,6 +56,9 @@ struct RootView: View {
             if vm.showGameOver { GameOverView() }
         }
         .sheet(isPresented: $vm.showHowToPlay) { HowToPlayView() }
+        .sheet(isPresented: $store.showPaywall) { PaywallView() }
+        .onAppear(perform: enforceEntitlement)
+        .onChange(of: store.isPremium) { _, _ in enforceEntitlement() }
         .preferredColorScheme(colorScheme)
         .onChange(of: scenePhase) { _, phase in
             switch phase {
@@ -62,6 +68,26 @@ struct RootView: View {
             @unknown default:  break
             }
         }
+    }
+
+    /// Locked modes open the paywall instead of switching.
+    private var modeSelection: Binding<GameMode> {
+        Binding(
+            get: { vm.mode },
+            set: { newMode in
+                if store.canPlay(newMode) {
+                    vm.mode = newMode
+                } else {
+                    store.showPaywall = true
+                }
+            }
+        )
+    }
+
+    /// Drops back to Standard if a premium mode was saved but the unlock is
+    /// gone (refund, family-sharing revoked, different Apple ID).
+    private func enforceEntitlement() {
+        if !store.canPlay(vm.mode) { vm.mode = .standard }
     }
 
     private var colorScheme: ColorScheme? {
@@ -113,6 +139,22 @@ struct RootView: View {
                 }
 
                 Divider()
+
+                Button {
+                    store.showPaywall = true
+                } label: {
+                    if store.isPremium {
+                        Label("Royal Pass unlocked", systemImage: "checkmark.seal.fill")
+                    } else {
+                        Label("Unlock Royal Pass", systemImage: "crown")
+                    }
+                }
+
+                if !store.isPremium {
+                    Button {
+                        Task { await store.restore() }
+                    } label: { Label("Restore purchases", systemImage: "arrow.clockwise") }
+                }
 
                 Button {
                     vm.showHowToPlay = true

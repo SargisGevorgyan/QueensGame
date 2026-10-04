@@ -316,4 +316,19 @@ final class QueensGameTests: XCTestCase {
         XCTAssertTrue(vm.isSolved)
         XCTAssertTrue(vm.analysis.solved)
     }
+
+    // MARK: - Monetization
+
+    func testOnlyDecreesRequiresPremium() {
+        XCTAssertFalse(GameMode.standard.requiresPremium)
+        XCTAssertTrue(GameMode.decrees.requiresPremium)
+    }
+
+    @MainActor
+    func testFreeStoreGatesDecreesButNotStandard() {
+        let store = PremiumStore(defaults: scratchDefaults())
+        XCTAssertFalse(store.isPremium)
+        XCTAssertTrue(store.canPlay(.standard))
+        XCTAssertFalse(store.canPlay(.decrees))
+    }
 }
