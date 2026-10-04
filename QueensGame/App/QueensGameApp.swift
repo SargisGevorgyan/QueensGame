@@ -12,13 +12,20 @@ import SwiftUI
 struct QueensGameApp: App {
     @StateObject private var game = QueensGameViewModel()
     @StateObject private var store = PremiumStore()
+    @StateObject private var gameCenter = GameCenterManager()
 
     var body: some Scene {
         WindowGroup {
             RootView()
                 .environmentObject(game)
                 .environmentObject(store)
+                .environmentObject(gameCenter)
                 .tint(QColor.accent)
+                .task {
+                    let center = gameCenter
+                    game.onSolve = { center.recordSolve($0) }
+                    center.authenticate()
+                }
         }
     }
 }

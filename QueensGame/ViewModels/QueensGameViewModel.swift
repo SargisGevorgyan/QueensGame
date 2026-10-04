@@ -26,6 +26,9 @@ final class QueensGameViewModel: ObservableObject {
     @Published private(set) var isSolved = false
     @Published private(set) var isDaily = false
 
+    /// Called after each solve is recorded locally (wired to Game Center).
+    var onSolve: ((GameCenterManager.Solve) -> Void)?
+
     @Published var showGameOver = false
     @Published var showHowToPlay = false
 
@@ -441,8 +444,13 @@ final class QueensGameViewModel: ObservableObject {
         stopTimers()
         Haptics.shared.notify(.success)
 
-        StatsStore.recordSolve(size: puzzle.size, seconds: Int(elapsed), moves: moves)
+        let seconds = Int(elapsed)
+        let firstDaily = isDaily && dailyKey.map { !StatsStore.isDailyDone(key: $0) } == true
+        StatsStore.recordSolve(size: puzzle.size, seconds: seconds, moves: moves)
         if isDaily, let key = dailyKey { StatsStore.recordDaily(key: key) }
+        if firstDaily { StatsStore.recordDailyBest(size: puzzle.size, seconds: seconds) }
+        if currentDecree != nil { StatsStore.recordDecreeWin() }
+        onSolve?(GameCenterManager.Solve(size: puzzle.size, seconds: seconds, isFirstDailyCompletion: firstDaily))
 
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
             withAnimation(.spring(response: 0.5, dampingFraction: 0.82)) {

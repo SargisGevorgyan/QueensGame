@@ -8,6 +8,7 @@ import SwiftUI
 struct RootView: View {
     @EnvironmentObject private var vm: QueensGameViewModel
     @EnvironmentObject private var store: PremiumStore
+    @EnvironmentObject private var gameCenter: GameCenterManager
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
@@ -154,6 +155,18 @@ struct RootView: View {
                     Button {
                         Task { await store.restore() }
                     } label: { Label("Restore purchases", systemImage: "arrow.clockwise") }
+                }
+
+                if gameCenter.isAuthenticated {
+                    Divider()
+
+                    Button {
+                        gameCenter.showLeaderboards()
+                    } label: { Label("Leaderboards", systemImage: "trophy") }
+
+                    Button {
+                        gameCenter.showAchievements()
+                    } label: { Label("Achievements", systemImage: "rosette") }
                 }
 
                 Button {
