@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A gold crown on the accent purple, centred in the 108dp adaptive canvas. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#EFB437"
+        android:pathData="M34,68 L30,42 L43,53 L54,36 L65,53 L78,42 L74,68 Z" />
+    <path
+        android:fillColor="#EFB437"
+        android:pathData="M34,71 L74,71 L74,76 L34,76 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,30 m-3,0 a3,3 0 1,0 6,0 a3,3 0 1,0 -6,0" />
+</vector>
