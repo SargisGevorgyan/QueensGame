@@ -32,6 +32,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
@@ -42,6 +43,7 @@ import androidx.compose.material.icons.automirrored.filled.Redo
 import androidx.compose.material.icons.automirrored.filled.Undo
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Lightbulb
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -62,8 +64,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.semantics.Role
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -165,11 +169,18 @@ fun RealmChips(state: GameSnapshot) {
 fun formatTime(seconds: Int): String = "%d:%02d".format(seconds / 60, seconds % 60)
 
 @Composable
-fun ControlDock(state: GameSnapshot, onUndo: () -> Unit, onRedo: () -> Unit, onClear: () -> Unit) {
+fun ControlDock(
+    state: GameSnapshot,
+    hints: Int,
+    onHint: () -> Unit,
+    onUndo: () -> Unit,
+    onRedo: () -> Unit,
+    onClear: () -> Unit,
+) {
     val q = LocalQColors.current
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        horizontalArrangement = Arrangement.spacedBy(6.dp),
         modifier = Modifier
             .fillMaxWidth()
             .card(q, 16.dp)
@@ -178,6 +189,24 @@ fun ControlDock(state: GameSnapshot, onUndo: () -> Unit, onRedo: () -> Unit, onC
         Stat("TIME", formatTime(state.elapsedSeconds))
         Stat("MOVES", "${state.moves}")
         Spacer(Modifier.weight(1f))
+        Box {
+            DockButton(Icons.Filled.Lightbulb, "Hint, $hints left", !state.isSolved, onHint)
+            Text(
+                "$hints",
+                fontSize = 10.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color.White,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+                    .offset(x = 5.dp, y = (-5).dp)
+                    .defaultMinSize(minWidth = 17.dp)
+                    .clip(CircleShape)
+                    .background(if (hints > 0) q.accent else q.muted)
+                    .padding(horizontal = 5.dp, vertical = 1.dp)
+                    .clearAndSetSemantics {},
+                textAlign = TextAlign.Center,
+            )
+        }
         DockButton(Icons.AutoMirrored.Filled.Undo, "Undo", state.canUndo, onUndo)
         DockButton(Icons.AutoMirrored.Filled.Redo, "Redo", state.canRedo, onRedo)
         DockButton(Icons.Filled.Delete, "Clear board", true, onClear)

@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A1B2C3D4E5F60718293A4D11 /* HintWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4D12 /* HintWallet.swift */; };
+		A1B2C3D4E5F60718293A4D21 /* RewardedAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4D22 /* RewardedAds.swift */; };
+		A1B2C3D4E5F60718293A4D31 /* AdMobRewardedAds.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4D32 /* AdMobRewardedAds.swift */; };
+		A1B2C3D4E5F60718293A4D41 /* HintOfferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4D42 /* HintOfferView.swift */; };
+		A1B2C3D4E5F60718293A4E03 /* GoogleMobileAds in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C3D4E5F60718293A4E02 /* GoogleMobileAds */; };
 		A1B2C3D4E5F60718293A4B03 /* PaywallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B04 /* PaywallView.swift */; };
 		A1B2C3D4E5F60718293A4B01 /* PremiumStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4B02 /* PremiumStore.swift */; };
 		A1B2C3D4E5F60718293A4C01 /* GameCenterCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60718293A4C02 /* GameCenterCatalog.swift */; };
@@ -52,6 +57,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A1B2C3D4E5F60718293A4D12 /* HintWallet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HintWallet.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4D22 /* RewardedAds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardedAds.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4D32 /* AdMobRewardedAds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdMobRewardedAds.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60718293A4D42 /* HintOfferView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HintOfferView.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293A4B05 /* QueensGame.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = QueensGame.storekit; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293A4B04 /* PaywallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaywallView.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F60718293A4B02 /* PremiumStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumStore.swift; sourceTree = "<group>"; };
@@ -85,6 +94,17 @@
 		FD5E067240051F5B9A3196C6 /* GameOverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFrameworksBuildPhase section */
+		A1B2C3D4E5F60718293A4E04 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A1B2C3D4E5F60718293A4E03 /* GoogleMobileAds in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
 /* Begin PBXGroup section */
 		169BF904E0039465883AB082 /* QueensGameUITests */ = {
 			isa = PBXGroup;
@@ -111,6 +131,7 @@
 				8C3C6D44488273BBB1A43C67 /* ControlDock.swift */,
 				D984F8E0633412E8020F82ED /* DecreeBanner.swift */,
 				FD5E067240051F5B9A3196C6 /* GameOverView.swift */,
+				A1B2C3D4E5F60718293A4D42 /* HintOfferView.swift */,
 				D75C1761540F21AC50B65230 /* HowToPlayView.swift */,
 				A1B2C3D4E5F60718293A4B04 /* PaywallView.swift */,
 				5ABB8468E8611D87879ABB6F /* RealmChips.swift */,
@@ -187,10 +208,13 @@
 		D7A06439946E68658AC0EF02 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				A1B2C3D4E5F60718293A4D32 /* AdMobRewardedAds.swift */,
 				A1B2C3D4E5F60718293A4C02 /* GameCenterCatalog.swift */,
 				A1B2C3D4E5F60718293A4C04 /* GameCenterManager.swift */,
 				A0DDEC70ECB2FDF7BB48B9B0 /* Haptics.swift */,
+				A1B2C3D4E5F60718293A4D12 /* HintWallet.swift */,
 				A1B2C3D4E5F60718293A4B02 /* PremiumStore.swift */,
+				A1B2C3D4E5F60718293A4D22 /* RewardedAds.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -248,6 +272,7 @@
 			buildPhases = (
 				1082C5B23D832E80ECDFEB52 /* Sources */,
 				04A56D3C0277427F1C98E47D /* Resources */,
+				A1B2C3D4E5F60718293A4E04 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -255,6 +280,7 @@
 			);
 			name = QueensGame;
 			packageProductDependencies = (
+				A1B2C3D4E5F60718293A4E02 /* GoogleMobileAds */,
 			);
 			productName = QueensGame;
 			productReference = BE4F835B1904BB7930FD5EF8 /* QueensGame.app */;
@@ -292,6 +318,9 @@
 			);
 			mainGroup = 5DBD76A0D15C902F1B599F77;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				A1B2C3D4E5F60718293A4E01 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = BE6DA6C1C79F65D0B7E5232F /* Products */;
 			projectDirPath = "";
@@ -337,6 +366,10 @@
 				C441843BDE5C337D4690200C /* RootView.swift in Sources */,
 				F38641E966C68FAC6FC4308D /* ShakeEffect.swift in Sources */,
 				A1B2C3D4E5F60718293A4B01 /* PremiumStore.swift in Sources */,
+				A1B2C3D4E5F60718293A4D11 /* HintWallet.swift in Sources */,
+				A1B2C3D4E5F60718293A4D21 /* RewardedAds.swift in Sources */,
+				A1B2C3D4E5F60718293A4D31 /* AdMobRewardedAds.swift in Sources */,
+				A1B2C3D4E5F60718293A4D41 /* HintOfferView.swift in Sources */,
 				A1B2C3D4E5F60718293A4C01 /* GameCenterCatalog.swift in Sources */,
 				A1B2C3D4E5F60718293A4C03 /* GameCenterManager.swift in Sources */,
 				A1B2C3D4E5F60718293A4B03 /* PaywallView.swift in Sources */,
@@ -656,6 +689,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A1B2C3D4E5F60718293A4E01 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/googleads/swift-package-manager-google-mobile-ads.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A1B2C3D4E5F60718293A4E02 /* GoogleMobileAds */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1B2C3D4E5F60718293A4E01 /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */;
+			productName = GoogleMobileAds;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 88D45BB2DA1056E49ED34CAD /* Project object */;
 }

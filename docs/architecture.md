@@ -1,7 +1,8 @@
 # Architecture
 
-The iOS app is plain SwiftUI with a single view model (MVVM) and no third-party
-dependencies. Game logic lives in pure Swift types that don't import SwiftUI, so
+The iOS app is plain SwiftUI with a single view model (MVVM). Its one third-party
+dependency, Google Mobile Ads, is isolated behind `RewardedAdService`
+(`Services/RewardedAds.swift`); only `AdMobRewardedAds.swift` imports it. Game logic lives in pure Swift types that don't import SwiftUI, so
 it can be unit tested directly.
 
 ## Code layout

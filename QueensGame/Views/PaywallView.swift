@@ -39,7 +39,7 @@ struct PaywallView: View {
                         feature("bolt.fill", "Speed decrees",
                                 "A new decree every 30 seconds.")
                         feature("heart.fill", "Support an indie puzzle",
-                                "No ads, no subscriptions, no tracking.")
+                                "Keeps new puzzles and decrees coming.")
                     }
                     .padding(16)
                     .card(cornerRadius: 16)

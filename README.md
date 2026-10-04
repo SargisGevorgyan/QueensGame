@@ -128,8 +128,8 @@ mid-round.
 ## Monetization: Royal Pass
 
 A single **non-consumable** in-app purchase, `com.app.queensgame.premium`
-("Royal Pass"), built on **StoreKit 2** with no third-party SDKs, ads or
-tracking.
+("Royal Pass"), built on **StoreKit 2**. Hints are the only place ads appear:
+see [Hints, rewarded ads and the hint pack](docs/hints.md).
 
 | Free | Royal Pass |
 | --- | --- |

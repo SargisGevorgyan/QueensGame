@@ -2,7 +2,8 @@
 //  Overlays.kt
 //  QueensGame (Android)
 //
-//  The victory card, the How-to-play sheet and the Royal Pass paywall.
+//  The victory card, the How-to-play sheet, the Royal Pass paywall and the
+//  "out of hints" offer (rewarded video or hint pack).
 //
 
 package com.app.queensgame.ui
@@ -30,6 +31,10 @@ import androidx.compose.material.icons.filled.Bolt
 import androidx.compose.material.icons.filled.Cloud
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Gavel
+import androidx.compose.material.icons.filled.CardGiftcard
+import androidx.compose.material.icons.filled.Lightbulb
+import androidx.compose.material.icons.filled.PlayCircle
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Verified
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -55,10 +60,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.app.queensgame.GameViewModel
 import com.app.queensgame.billing.PremiumStore
 import com.app.queensgame.billing.PurchaseState
 import com.app.queensgame.core.Decree
 import com.app.queensgame.core.GameSnapshot
+import com.app.queensgame.core.HintWallet
 
 // region Game over
 
@@ -282,7 +289,7 @@ fun PaywallDialog(store: PremiumStore, onDismiss: () -> Unit) {
                 Feature(Icons.Filled.Gavel, "Royal Decrees mode", "Every round the herald bends the rules.")
                 Feature(Icons.Filled.Cloud, "All four decrees", "Fog of War, Royal Guard, Assassin's Range and Color Lock.")
                 Feature(Icons.Filled.Bolt, "Speed decrees", "A new decree every 30 seconds.")
-                Feature(Icons.Filled.Favorite, "Support an indie puzzle", "No ads, no subscriptions, no tracking.")
+                Feature(Icons.Filled.Favorite, "Support an indie puzzle", "Keeps new puzzles and decrees coming.")
             }
 
             when (val s = store.purchaseState) {
@@ -331,6 +338,101 @@ private fun Feature(icon: ImageVector, title: String, detail: String) {
         Column(verticalArrangement = Arrangement.spacedBy(2.dp)) {
             Text(title, fontSize = 17.sp, fontWeight = FontWeight.SemiBold, color = q.ink)
             Text(detail, fontSize = 15.sp, color = q.muted)
+        }
+    }
+}
+
+// endregion
+
+// region Out of hints
+
+@Composable
+fun HintOfferDialog(vm: GameViewModel, onDismiss: () -> Unit) {
+    val q = LocalQColors.current
+    val activity = LocalContext.current.findActivity()
+    val store = vm.store
+    val buying = store.hintPurchaseState == PurchaseState.Purchasing
+    val busy = buying || vm.adLoading
+
+    DisposableEffect(Unit) {
+        store.refresh()
+        activity?.let(vm::preloadAd)
+        onDispose { }
+    }
+
+    Sheet(title = "", actionLabel = "Close", onDismiss = onDismiss) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(20.dp),
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            Icon(Icons.Filled.Lightbulb, contentDescription = null, tint = q.gold, modifier = Modifier.size(54.dp))
+
+            Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                Text("Out of hints", fontFamily = FontFamily.Serif, fontWeight = FontWeight.SemiBold, fontSize = 30.sp, color = q.ink)
+                Text(
+                    "A hint reveals one correct Queen, or lifts a misplaced one.",
+                    color = q.muted,
+                    textAlign = TextAlign.Center,
+                )
+            }
+
+            Button(
+                onClick = { activity?.let(vm::watchAdForHint) },
+                enabled = !busy && activity != null,
+                shape = RoundedCornerShape(14.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = q.accent, contentColor = Color.White),
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                OfferRow(Icons.Filled.PlayCircle, "Watch a video", "+${HintWallet.AD_REWARD} hint", vm.adLoading, Color.White)
+            }
+
+            OutlinedButton(
+                onClick = { activity?.let(store::purchaseHintPack) },
+                enabled = !busy && activity != null,
+                shape = RoundedCornerShape(14.dp),
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                OfferRow(
+                    Icons.Filled.ShoppingCart,
+                    "${PremiumStore.HINT_PACK_SIZE} hints",
+                    store.hintPackPrice ?: "Buy",
+                    buying,
+                    q.accent,
+                )
+            }
+
+            vm.adError?.let { Text(it, fontSize = 13.sp, color = q.danger, textAlign = TextAlign.Center) }
+            when (val s = store.hintPurchaseState) {
+                is PurchaseState.Failed -> Text(s.message, fontSize = 13.sp, color = q.danger, textAlign = TextAlign.Center)
+                PurchaseState.Pending -> Text(
+                    "Purchase pending approval. Your hints arrive once it's approved.",
+                    fontSize = 13.sp, color = q.muted, textAlign = TextAlign.Center,
+                )
+                else -> Unit
+            }
+
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                Icon(Icons.Filled.CardGiftcard, contentDescription = null, tint = q.muted, modifier = Modifier.size(16.dp))
+                Text("You get a free hint every day.", fontSize = 13.sp, color = q.muted)
+            }
+        }
+    }
+}
+
+@Composable
+private fun OfferRow(icon: ImageVector, title: String, detail: String, spinning: Boolean, tint: Color) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
+    ) {
+        Icon(icon, contentDescription = null, tint = tint, modifier = Modifier.size(22.dp))
+        Spacer(Modifier.width(12.dp))
+        Text(title, fontWeight = FontWeight.SemiBold, color = tint, modifier = Modifier.weight(1f))
+        if (spinning) {
+            CircularProgressIndicator(color = tint, strokeWidth = 2.dp, modifier = Modifier.size(18.dp))
+        } else {
+            Text(detail, fontWeight = FontWeight.SemiBold, color = tint)
         }
     }
 }
