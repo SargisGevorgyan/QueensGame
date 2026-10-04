@@ -8,6 +8,7 @@ import SwiftUI
 struct RootView: View {
     @EnvironmentObject private var vm: QueensGameViewModel
     @EnvironmentObject private var store: PremiumStore
+    @EnvironmentObject private var hints: HintWallet
     @EnvironmentObject private var gameCenter: GameCenterManager
     @Environment(\.scenePhase) private var scenePhase
 
@@ -58,12 +59,13 @@ struct RootView: View {
         }
         .sheet(isPresented: $vm.showHowToPlay) { HowToPlayView() }
         .sheet(isPresented: $store.showPaywall) { PaywallView() }
+        .sheet(isPresented: $hints.showOffer) { HintOfferView() }
         .onAppear(perform: enforceEntitlement)
         .onChange(of: store.isPremium) { _, _ in enforceEntitlement() }
         .preferredColorScheme(colorScheme)
         .onChange(of: scenePhase) { _, phase in
             switch phase {
-            case .active:      vm.resumeTimer()
+            case .active:      vm.resumeTimer(); hints.refillIfNewDay()
             case .inactive,
                  .background:  vm.pauseTimer()
             @unknown default:  break

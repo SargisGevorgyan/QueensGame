@@ -18,6 +18,21 @@
       "productID" : "com.app.queensgame.premium",
       "referenceName" : "Royal Pass",
       "type" : "NonConsumable"
+    },
+    {
+      "displayPrice" : "0.99",
+      "familyShareable" : false,
+      "internalID" : "6F1C2A90",
+      "localizations" : [
+        {
+          "description" : "Ten hints for any puzzle.",
+          "displayName" : "10 Hints",
+          "locale" : "en_US"
+        }
+      ],
+      "productID" : "com.app.queensgame.hints10",
+      "referenceName" : "10 Hints",
+      "type" : "Consumable"
     }
   ],
   "settings" : {

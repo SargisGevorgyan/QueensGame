@@ -6,6 +6,11 @@ options:
   createIntermediateGroups: true
   xcodeVersion: "16.0"
 
+packages:
+  GoogleMobileAds:
+    url: https://github.com/googleads/swift-package-manager-google-mobile-ads.git
+    majorVersion: 12.0.0
+
 settings:
   base:
     SWIFT_VERSION: "5.0"
@@ -22,6 +27,8 @@ targets:
     platform: iOS
     sources:
       - path: QueensGame
+    dependencies:
+      - package: GoogleMobileAds
     settings:
       base:
         INFOPLIST_FILE: QueensGame/Info.plist

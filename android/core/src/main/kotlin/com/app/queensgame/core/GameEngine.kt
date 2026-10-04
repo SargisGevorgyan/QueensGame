@@ -43,6 +43,8 @@ data class GameSnapshot(
     val shakeToken: Int,
     val decreePulse: Int,
     val lastPlaced: GridPos?,
+    /** The square the last hint changed (drives the glow ring). */
+    val hintedCell: GridPos?,
     val roundTag: String,
     val dailyLabel: String,
 ) {
@@ -87,6 +89,8 @@ class GameEngine(
     var decreePulse = 0; private set
     /** The square that most recently became a Queen (drives the pop animation). */
     var lastPlaced: GridPos? = null; private set
+    /** The square the last hint changed (drives the glow ring). */
+    var hintedCell: GridPos? = null; private set
 
     // endregion
 
@@ -233,6 +237,7 @@ class GameEngine(
         frozen = 0
         isSolved = false
         lastPlaced = null
+        hintedCell = null
         lastConflictCount = 0
         nextRotationAt = ROTATION_MILLIS
 
@@ -294,6 +299,7 @@ class GameEngine(
         shakeToken = shakeToken,
         decreePulse = decreePulse,
         lastPlaced = lastPlaced,
+        hintedCell = hintedCell,
         roundTag = roundTag,
         dailyLabel = dailyLabel,
     )
@@ -408,6 +414,48 @@ class GameEngine(
 
     // endregion
 
+    // region Hints
+
+    /**
+     * Spends one step of the known solution: a misplaced Queen is lifted
+     * first, otherwise the next missing Queen is dropped on its square.
+     * Returns false when there is nothing to fix (the caller keeps the hint).
+     */
+    fun applyHint(): Boolean {
+        if (isSolved) return false
+        val n = puzzle.size
+
+        for (r in 0 until n) {
+            for (c in 0 until n) {
+                if (cells[r][c].base == CellBase.QUEEN && puzzle.solution[r] != c) {
+                    val pos = GridPos(r, c)
+                    setBase(pos, CellBase.EMPTY)
+                    stripAutoX(owner = pos)
+                    moves += 1
+                    commit(placedQueenAt = null)
+                    hintedCell = pos
+                    return true
+                }
+            }
+        }
+
+        for (r in 0 until n) {
+            val pos = GridPos(r, puzzle.solution[r])
+            if (cells[pos].base != CellBase.QUEEN) {
+                setBase(pos, CellBase.QUEEN)
+                applyAutoX(owner = pos)
+                reveal(pos)
+                moves += 1
+                commit(placedQueenAt = pos)
+                hintedCell = pos
+                return true
+            }
+        }
+        return false
+    }
+
+    // endregion
+
     // region Smart Auto-X
 
     /** Whether an auto-fill should run at all right now. */
@@ -494,6 +542,7 @@ class GameEngine(
     }
 
     private fun pushHistory() {
+        hintedCell = null
         if (historyIndex < history.size - 1) {
             history = history.subList(0, historyIndex + 1).toMutableList()
         }
@@ -502,6 +551,7 @@ class GameEngine(
     }
 
     private fun afterHistoryJump() {
+        hintedCell = null
         if (isSolved) {
             isSolved = false
             resumeTimer()

@@ -59,4 +59,44 @@ final class QueensGameUITests: XCTestCase {
         app.buttons["Close"].tap()
         XCTAssertTrue(app.buttons["Clear board"].waitForExistence(timeout: 5))
     }
+
+    func testHintButtonPlacesAQueen() {
+        let app = freshApp()
+        app.launchArguments += ["-UITestHintBalance", "3"]
+        app.launch()
+
+        let hint = app.buttons["dock.hint"]
+        XCTAssertTrue(hint.waitForExistence(timeout: 5))
+        hint.tap()
+        XCTAssertTrue(app.staticTexts["1 / \(boardSize(app)) queens placed"].waitForExistence(timeout: 5))
+    }
+
+    /// With no hints left the offer sheet opens; a (stubbed) video earns one.
+    func testOutOfHintsOffersVideoAndPack() {
+        let app = freshApp()
+        app.launchArguments += ["-UITestHintBalance", "0", "-UITestInstantAds"]
+        app.launch()
+
+        let hint = app.buttons["dock.hint"]
+        XCTAssertTrue(hint.waitForExistence(timeout: 5))
+        hint.tap()
+
+        let watch = app.buttons["hints.watchAd"]
+        XCTAssertTrue(watch.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["hints.buyPack"].exists)
+        watch.tap()
+
+        let closed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: watch)
+        XCTAssertEqual(XCTWaiter().wait(for: [closed], timeout: 5), .completed)
+        hint.tap()
+        XCTAssertTrue(app.staticTexts["1 / \(boardSize(app)) queens placed"].waitForExistence(timeout: 5))
+    }
+
+    /// Reads N from the "0 / N queens placed" status line.
+    private func boardSize(_ app: XCUIApplication) -> Int {
+        let status = app.staticTexts.matching(NSPredicate(format: "label CONTAINS 'queens placed'")).firstMatch
+        _ = status.waitForExistence(timeout: 5)
+        let parts = status.label.split(separator: " ")
+        return parts.count > 2 ? Int(parts[2]) ?? 8 : 8
+    }
 }

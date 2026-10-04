@@ -3,12 +3,15 @@
 //  QueensGame
 //
 //  Bottom bar: timer + move counter on the left, board actions on the right.
+//  The hint button spends one hint, or opens the "get more hints" sheet
+//  when the balance is empty.
 //
 
 import SwiftUI
 
 struct ControlDock: View {
     @EnvironmentObject private var vm: QueensGameViewModel
+    @EnvironmentObject private var hints: HintWallet
 
     private var timeString: String {
         let total = Int(vm.elapsed)
@@ -16,21 +19,54 @@ struct ControlDock: View {
     }
 
     var body: some View {
-        HStack(spacing: 12) {
+        HStack(spacing: 8) {
             stat("TIME", timeString)
             stat("MOVES", "\(vm.moves)")
 
             Spacer(minLength: 8)
 
-            dockButton("arrow.uturn.backward", label: "Undo") { vm.undo() }
-                .disabled(!vm.canUndo)
-            dockButton("arrow.uturn.forward", label: "Redo") { vm.redo() }
-                .disabled(!vm.canRedo)
-            dockButton("trash", label: "Clear board") { vm.clearBoard() }
+            HStack(spacing: 6) {
+                hintButton
+
+                dockButton("arrow.uturn.backward", label: "Undo") { vm.undo() }
+                    .disabled(!vm.canUndo)
+                dockButton("arrow.uturn.forward", label: "Redo") { vm.redo() }
+                    .disabled(!vm.canRedo)
+                dockButton("trash", label: "Clear board") { vm.clearBoard() }
+            }
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
         .card(cornerRadius: 16)
+    }
+
+    private var hintButton: some View {
+        dockButton("lightbulb", label: "Hint") { useHint() }
+            .overlay(alignment: .topTrailing) {
+                Text("\(hints.balance)")
+                    .font(.system(size: 10, weight: .bold, design: .rounded))
+                    .monospacedDigit()
+                    .padding(.horizontal, 5)
+                    .frame(minWidth: 17, minHeight: 17)
+                    .background(hints.balance > 0 ? QColor.accent : QColor.muted, in: Capsule())
+                    .foregroundStyle(.white)
+                    .offset(x: 5, y: -5)
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
+            }
+            .disabled(vm.isSolved)
+            .accessibilityValue("\(hints.balance) left")
+            .accessibilityIdentifier("dock.hint")
+    }
+
+    private func useHint() {
+        guard hints.balance > 0 else {
+            hints.showOffer = true
+            return
+        }
+        withAnimation(.spring(response: 0.35, dampingFraction: 0.7)) {
+            if vm.applyHint() { hints.spend() }
+        }
     }
 
     private func stat(_ title: String, _ value: String) -> some View {

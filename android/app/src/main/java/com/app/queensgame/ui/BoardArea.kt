@@ -258,6 +258,7 @@ private fun CellView(state: GameSnapshot, pos: GridPos, side: Dp, q: QColors) {
     val display = state.display(pos)
     val autoOnly = state.isAutoX(pos)
     val conflict = pos in state.analysis.conflicts
+    val hinted = state.hintedCell == pos
     val walls = if (!guarded && !fogged) state.walls(pos) else emptySet()
 
     val target = when {
@@ -281,7 +282,13 @@ private fun CellView(state: GameSnapshot, pos: GridPos, side: Dp, q: QColors) {
                 if (WallEdge.LEADING in walls) drawRect(color, Offset.Zero, Size(wallPx, size.height))
                 if (WallEdge.TRAILING in walls) drawRect(color, Offset(size.width - wallPx, 0f), Size(wallPx, size.height))
             }
-            .then(if (conflict) Modifier.border(2.5.dp, q.danger) else Modifier)
+            .then(
+                when {
+                    conflict -> Modifier.border(2.5.dp, q.danger)
+                    hinted -> Modifier.border(3.dp, q.gold)
+                    else -> Modifier
+                },
+            )
             .semantics { contentDescription = describe(pos, display, guarded) },
     ) {
         val symbolSize = side * 0.6f
