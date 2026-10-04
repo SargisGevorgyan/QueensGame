@@ -17,6 +17,7 @@ and undo/redo.
 | [Architecture](architecture.md) | Code layout, data model, view model, data flow, persistence |
 | [Puzzle generator](puzzle-generator.md) | How puzzles are built and proven unique, seeding, Daily keys |
 | [Web version](web-version.md) | How `queens/index.html` is organised and where it differs from iOS |
+| [Game Center](game-center.md) | iOS leaderboards, achievements, their ids, and App Store Connect setup |
 | [Building and testing](building-and-testing.md) | XcodeGen, Xcode, `xcodebuild`, the test suite, Pages deploy |
 | [Contributing](contributing.md) | Branching, conventions, keeping iOS and web in sync, PR checklist |
 

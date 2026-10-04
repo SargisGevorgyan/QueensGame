@@ -11,9 +11,16 @@ final class QueensGameUITests: XCTestCase {
         continueAfterFailure = false
     }
 
+    /// Game Center stays off so its sign-in sheet never covers the board.
+    private func freshApp() -> XCUIApplication {
+        let app = XCUIApplication()
+        app.launchArguments += ["-DisableGameCenter"]
+        return app
+    }
+
     /// Launches with the Royal Pass unlocked (DEBUG-only launch argument).
     private func premiumApp() -> XCUIApplication {
-        let app = XCUIApplication()
+        let app = freshApp()
         app.launchArguments += ["-UITestPremium"]
         return app
     }
@@ -41,7 +48,7 @@ final class QueensGameUITests: XCTestCase {
     }
 
     func testLockedDecreesOpensPaywall() {
-        let app = XCUIApplication()
+        let app = freshApp()
         app.launch()
 
         let locked = app.buttons.matching(NSPredicate(format: "label BEGINSWITH 'Royal Decrees'")).firstMatch

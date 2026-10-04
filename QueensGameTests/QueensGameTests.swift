@@ -331,4 +331,55 @@ final class QueensGameTests: XCTestCase {
         XCTAssertTrue(store.canPlay(.standard))
         XCTAssertFalse(store.canPlay(.decrees))
     }
+
+    // MARK: - Game Center
+
+    func testDailyStreakCountsConsecutiveDaysEndingToday() {
+        let cal = Calendar.current
+        let today = Date()
+        func key(_ daysAgo: Int, _ size: Int = 8) -> String {
+            PuzzleGenerator.dailyKey(date: cal.date(byAdding: .day, value: -daysAgo, to: today)!, size: size)
+        }
+        XCTAssertEqual(StatsStore.dailyStreak(doneKeys: [], asOf: today), 0)
+        XCTAssertEqual(StatsStore.dailyStreak(doneKeys: [key(1)], asOf: today), 0)    // not today
+        XCTAssertEqual(StatsStore.dailyStreak(doneKeys: [key(0), key(1, 6), key(2, 9)], asOf: today), 3)
+        XCTAssertEqual(StatsStore.dailyStreak(doneKeys: [key(0), key(0, 6), key(2)], asOf: today), 1)  // gap
+    }
+
+    func testAchievementProgress() {
+        XCTAssertTrue(GameCenterCatalog.progress(for: .init()).isEmpty)
+
+        let p = GameCenterCatalog.progress(for: .init(totalSolved: 5, dailyStreak: 3, everSolvedDaily: true,
+                                                      decreeWins: 1, bestNineSeconds: 179))
+        XCTAssertEqual(p[.firstSolve], 100)
+        XCTAssertEqual(p[.solves25], 20)
+        XCTAssertEqual(p[.solves100], 5)
+        XCTAssertEqual(p[.firstDaily], 100)
+        XCTAssertEqual(p[.dailyStreak3], 100)
+        XCTAssertEqual(p[.dailyStreak7]!, 300.0 / 7, accuracy: 0.001)
+        XCTAssertEqual(p[.firstDecree], 100)
+        XCTAssertEqual(p[.decrees10], 10)
+        XCTAssertEqual(p[.swiftNine], 100)
+
+        let slow = GameCenterCatalog.progress(for: .init(totalSolved: 500, bestNineSeconds: 180))
+        XCTAssertEqual(slow[.solves100], 100)
+        XCTAssertNil(slow[.swiftNine])
+    }
+
+    func testGameCenterIdsAreUnique() {
+        let ids = GameCenterCatalog.allLeaderboardIDs + GameCenterCatalog.Achievement.allCases.map(\.id)
+        XCTAssertEqual(Set(ids).count, ids.count)
+        XCTAssertTrue(ids.allSatisfy { $0.count <= 100 })
+    }
+
+    @MainActor
+    func testSolveIsReportedOnceAndRandomRoundsSkipLeaderboard() {
+        let vm = QueensGameViewModel(defaults: scratchDefaults())
+        var reports: [GameCenterManager.Solve] = []
+        vm.onSolve = { reports.append($0) }
+        vm.autoSolveForTesting()
+        XCTAssertEqual(reports.count, 1)
+        XCTAssertEqual(reports.first?.size, vm.puzzle.size)
+        XCTAssertEqual(reports.first?.isFirstDailyCompletion, false)
+    }
 }
