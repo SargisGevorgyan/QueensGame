@@ -2,7 +2,8 @@
 
 QueensGame is a "Queens" logic puzzle in two builds that share one design:
 
-- **iOS app** (`QueensGame/`): SwiftUI + MVVM, iOS 17+, no third-party dependencies.
+- **iOS app** (`QueensGame/`): SwiftUI + MVVM, iOS 17+. The only third-party
+  dependency is Google Mobile Ads (rewarded hint videos).
 - **Web version** (`queens/index.html`): a single self-contained HTML file,
   deployed to GitHub Pages at https://sargisgevorgyan.github.io/QueensGame/.
 
@@ -17,6 +18,7 @@ and undo/redo.
 | [Architecture](architecture.md) | Code layout, data model, view model, data flow, persistence |
 | [Puzzle generator](puzzle-generator.md) | How puzzles are built and proven unique, seeding, Daily keys |
 | [Web version](web-version.md) | How `queens/index.html` is organised and where it differs from iOS |
+| [Hints](hints.md) | Hint balance, rewarded AdMob videos, the hint pack, and AdMob / store setup |
 | [Game Center](game-center.md) | iOS leaderboards, achievements, their ids, and App Store Connect setup |
 | [Building and testing](building-and-testing.md) | XcodeGen, Xcode, `xcodebuild`, the test suite, Pages deploy |
 | [Contributing](contributing.md) | Branching, conventions, keeping iOS and web in sync, PR checklist |

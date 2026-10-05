@@ -326,10 +326,72 @@ final class QueensGameTests: XCTestCase {
 
     @MainActor
     func testFreeStoreGatesDecreesButNotStandard() {
-        let store = PremiumStore(defaults: scratchDefaults())
+        let defaults = scratchDefaults()
+        let store = PremiumStore(hints: HintWallet(defaults: defaults), defaults: defaults)
         XCTAssertFalse(store.isPremium)
         XCTAssertTrue(store.canPlay(.standard))
         XCTAssertFalse(store.canPlay(.decrees))
+    }
+
+    // MARK: - Hints
+
+    @MainActor
+    func testHintPlacesACorrectQueen() throws {
+        let vm = QueensGameViewModel(defaults: scratchDefaults())
+        XCTAssertTrue(vm.applyHint())
+        let pos = try XCTUnwrap(vm.hintedCell)
+        XCTAssertEqual(vm.base(at: pos), .queen)
+        XCTAssertEqual(vm.puzzle.solution[pos.row], pos.col)
+        XCTAssertEqual(vm.placedCount, 1)
+    }
+
+    @MainActor
+    func testHintLiftsAMisplacedQueenFirst() {
+        let vm = QueensGameViewModel(defaults: scratchDefaults())
+        let wrong = GridPos(row: 0, col: (vm.puzzle.solution[0] + 1) % vm.puzzle.size)
+        vm.placeQueen(wrong)
+        XCTAssertTrue(vm.applyHint())
+        XCTAssertEqual(vm.hintedCell, wrong)
+        XCTAssertEqual(vm.base(at: wrong), .empty)
+        XCTAssertEqual(vm.placedCount, 0)
+    }
+
+    @MainActor
+    func testHintsAloneSolveThePuzzleThenStop() {
+        let vm = QueensGameViewModel(defaults: scratchDefaults())
+        for _ in 0..<vm.puzzle.size { XCTAssertTrue(vm.applyHint()) }
+        XCTAssertTrue(vm.isSolved)
+        XCTAssertFalse(vm.applyHint())
+    }
+
+    @MainActor
+    func testHintWalletStartsWithFreeHintsAndRefillsDaily() {
+        let defaults = scratchDefaults()
+        let day0 = Date(timeIntervalSince1970: 1_800_000_000)
+        let day1 = Calendar.current.date(byAdding: .day, value: 1, to: day0)!
+
+        let wallet = HintWallet(defaults: defaults, now: day0)
+        XCTAssertEqual(wallet.balance, HintWallet.freeCap)
+        for _ in 0..<HintWallet.freeCap { XCTAssertTrue(wallet.spend()) }
+        XCTAssertFalse(wallet.spend())
+        XCTAssertEqual(wallet.balance, 0)
+
+        wallet.refillIfNewDay(now: day0)               // same day: nothing
+        XCTAssertEqual(wallet.balance, 0)
+
+        let reopened = HintWallet(defaults: defaults, now: day1)
+        XCTAssertEqual(reopened.balance, 1)            // +1 on a new day
+        reopened.credit(PremiumStore.hintPackSize)
+        XCTAssertEqual(HintWallet(defaults: defaults, now: day1).balance, 1 + PremiumStore.hintPackSize)
+    }
+
+    @MainActor
+    func testDailyRefillNeverExceedsFreeCap() {
+        let defaults = scratchDefaults()
+        let day0 = Date(timeIntervalSince1970: 1_800_000_000)
+        _ = HintWallet(defaults: defaults, now: day0)
+        let later = Calendar.current.date(byAdding: .day, value: 5, to: day0)!
+        XCTAssertEqual(HintWallet(defaults: defaults, now: later).balance, HintWallet.freeCap)
     }
 
     // MARK: - Game Center

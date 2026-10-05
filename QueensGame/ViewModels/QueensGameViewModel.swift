@@ -38,6 +38,8 @@ final class QueensGameViewModel: ObservableObject {
     @Published private(set) var decreePulse = 0
     /// The square that most recently became a Queen (drives the pop animation).
     @Published private(set) var lastPlaced: GridPos?
+    /// The square the last hint changed (drives the glow ring).
+    @Published private(set) var hintedCell: GridPos?
 
     // MARK: - Settings
 
@@ -170,6 +172,7 @@ final class QueensGameViewModel: ObservableObject {
         isSolved = false
         showGameOver = false
         lastPlaced = nil
+        hintedCell = nil
         lastConflictCount = 0
 
         recompute()
@@ -321,6 +324,41 @@ final class QueensGameViewModel: ObservableObject {
         }
     }
 
+    // MARK: - Hints
+
+    /// Spends one step of the known solution: a misplaced Queen is lifted
+    /// first, otherwise the next missing Queen is dropped on its square.
+    /// Returns false when there is nothing to fix (the caller keeps the hint).
+    @discardableResult
+    func applyHint() -> Bool {
+        guard !isSolved else { return false }
+        let n = puzzle.size
+
+        for r in 0..<n {
+            for c in 0..<n where cells[r][c].base == .queen && puzzle.solution[r] != c {
+                let pos = GridPos(row: r, col: c)
+                cells[r][c].base = .empty
+                stripAutoX(owner: pos)
+                moves += 1
+                commit(placedQueenAt: nil)
+                hintedCell = pos
+                return true
+            }
+        }
+
+        for r in 0..<n where cells[r][puzzle.solution[r]].base != .queen {
+            let pos = GridPos(row: r, col: puzzle.solution[r])
+            cells[r][pos.col].base = .queen
+            applyAutoX(owner: pos)
+            reveal(pos)
+            moves += 1
+            commit(placedQueenAt: pos)
+            hintedCell = pos
+            return true
+        }
+        return false
+    }
+
     // MARK: - Smart Auto-X
 
     /// Whether an auto-fill should run at all right now.
@@ -398,6 +436,7 @@ final class QueensGameViewModel: ObservableObject {
     }
 
     private func pushHistory() {
+        hintedCell = nil
         if historyIndex < history.count - 1 {
             history.removeSubrange((historyIndex + 1)...)
         }
@@ -406,6 +445,7 @@ final class QueensGameViewModel: ObservableObject {
     }
 
     private func afterHistoryJump() {
+        hintedCell = nil
         if isSolved {
             isSolved = false
             showGameOver = false

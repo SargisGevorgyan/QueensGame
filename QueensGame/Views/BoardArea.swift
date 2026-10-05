@@ -120,6 +120,7 @@ struct CellView: View {
         let display = vm.display(at: pos)
         let autoOnly = vm.isAutoX(at: pos)
         let conflict = vm.analysis.conflicts.contains(pos)
+        let hinted = vm.hintedCell == pos
 
         ZStack {
             Rectangle()
@@ -134,10 +135,16 @@ struct CellView: View {
 
             if conflict {
                 Rectangle().strokeBorder(QColor.danger, lineWidth: 2.5)
+            } else if hinted {
+                Rectangle()
+                    .strokeBorder(QColor.gold, lineWidth: 3)
+                    .shadow(color: QColor.gold.opacity(0.7), radius: 4)
+                    .transition(.opacity)
             }
         }
         .animation(.spring(response: 0.28, dampingFraction: 0.55), value: display)
         .animation(.easeOut(duration: 0.18), value: conflict)
+        .animation(.easeInOut(duration: 0.3), value: hinted)
         .animation(.easeInOut(duration: 0.25), value: fogged)
     }
 

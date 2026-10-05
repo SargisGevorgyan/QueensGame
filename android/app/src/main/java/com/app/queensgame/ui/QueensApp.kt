@@ -139,7 +139,14 @@ fun QueensApp(vm: GameViewModel) {
 
                         RealmChips(state)
 
-                        ControlDock(state, onUndo = vm::undo, onRedo = vm::redo, onClear = vm::clearBoard)
+                        ControlDock(
+                            state,
+                            hints = vm.hintBalance,
+                            onHint = vm::useHint,
+                            onUndo = vm::undo,
+                            onRedo = vm::redo,
+                            onClear = vm::clearBoard,
+                        )
                     }
                 }
             }
@@ -162,6 +169,7 @@ fun QueensApp(vm: GameViewModel) {
 
         if (vm.showHowToPlay) HowToPlayDialog(onDismiss = { vm.showHowToPlay = false })
         if (vm.store.showPaywall) PaywallDialog(vm.store, onDismiss = { vm.store.showPaywall = false })
+        if (vm.showHintOffer) HintOfferDialog(vm, onDismiss = vm::dismissHintOffer)
     }
 }
 
